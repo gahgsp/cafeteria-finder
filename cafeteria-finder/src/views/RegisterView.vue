@@ -7,12 +7,22 @@
                 <v-col cols="12">
                     <v-row>
                         <v-col cols="12" md="12">
-                            <span class="text-h2">Login</span>
+                            <span class="text-h2">Create Account</span>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="12" md="12">
-                            <v-text-field label="E-mail" hide-details required></v-text-field>
+                            <v-text-field label="Username" hide-details required></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col cols="12" md="12">
+                            <v-text-field label="E-Mail" hide-details required></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col cols="12" md="12">
+                            <v-text-field label="Confirm E-Mail" hide-details required></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
@@ -21,12 +31,17 @@
                         </v-col>
                     </v-row>
                     <v-row>
+                        <v-col cols="12" md="12">
+                            <v-text-field label="Confirm Password" type="password" hide-details required></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row>
                         <v-col cols="12" style="display: flex; justify-content: space-around; align-items: center;">
                             <v-btn variant="outlined">
-                                Login
+                                Register
                             </v-btn>
                             <v-btn variant="outlined">
-                                Register
+                                Cancel
                             </v-btn>
                         </v-col>
                     </v-row>
