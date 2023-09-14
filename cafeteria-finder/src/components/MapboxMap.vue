@@ -8,6 +8,9 @@ import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '@mapbox/mapbox-gl-geocoder/lib/mapbox-gl-geocoder.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { useMapStore } from '@/stores/map'
+
+const mapStore = useMapStore()
 
 let map: mapboxgl.Map | null = null;
 
@@ -111,6 +114,7 @@ function createMap() {
             },
         })
 
+        // Adiciona ao mapa a barra de pesquisa de cidades.
         map.addControl(
             new MapboxGeocoder({
                 accessToken: mapboxgl.accessToken,
@@ -126,19 +130,12 @@ function createMap() {
         if (!e.features) {
             return
         }
-
-        console.log(e.features[0])
+        // Usar a API abaixo pra pegar a rota entre dois points e a distancia / tempo.
+        // Pra calcular, ver comentario no post https://stackoverflow.com/questions/61385266/getting-total-duration-and-distance-on-mapbox-javascript
+        // const response = await fetch('https://api.mapbox.com/directions/v5/mapbox/driving/-8.61767353533753,42.102184359031504;-8.495246688170312,41.44289308091726?steps=true&geometries=geojson&access_token=pk.eyJ1IjoiYWdlbmNlc3R1ZGlvbWV0YSIsImEiOiJjanh5ZW81aHEwOHV3M2lwZzhhNW1vdXl5In0.3hbV2QKVzZWf511JK9xCug')
+        // console.log(response.json())
+        mapStore.setSelectedCafeteria(e.features[0])
     })
-
-    // const handleOnClick = async (position: any) => {
-    //     console.log(position.lngLat)
-    //     isOpen.value = true
-    //     // Usar a API abaixo pra pegar a rota entre dois points e a distancia / tempo.
-    //     // Pra calcular, ver comentario no post https://stackoverflow.com/questions/61385266/getting-total-duration-and-distance-on-mapbox-javascript
-    //     // const response = await fetch('https://api.mapbox.com/directions/v5/mapbox/driving/-8.61767353533753,42.102184359031504;-8.495246688170312,41.44289308091726?steps=true&geometries=geojson&access_token=pk.eyJ1IjoiYWdlbmNlc3R1ZGlvbWV0YSIsImEiOiJjanh5ZW81aHEwOHV3M2lwZzhhNW1vdXl5In0.3hbV2QKVzZWf511JK9xCug')
-    //     // console.log(response.json())
-    // }
-
 }
 
 onMounted(() => {

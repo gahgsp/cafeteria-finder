@@ -70,6 +70,11 @@ const mapCenter = ref([0, 0]);
                 <v-col cols="8">
                     <!-- Map -->
                     <MapboxMap />
+                    <v-navigation-drawer v-model="selectedCafeteria" location="bottom" temporary
+                        @update:model-value="onModelChange">
+                        <div>{{ JSON.stringify(selectedCafeteria) }}</div>
+                    </v-navigation-drawer>
+
                 </v-col>
             </v-row>
         </v-main>
@@ -77,5 +82,17 @@ const mapCenter = ref([0, 0]);
 </template>
 
 <script setup lang="ts">
-import MapboxMap from '../components/MapboxMap.vue'
+import { useMapStore } from '@/stores/map';
+import MapboxMap from '@/components/MapboxMap.vue'
+import { storeToRefs } from 'pinia';
+
+const store = useMapStore()
+const { selectedCafeteria } = storeToRefs(store)
+
+const onModelChange = (hasChanged: boolean) => {
+    if (!hasChanged) {
+        store.setSelectedCafeteria(null)
+    }
+}
+
 </script>
