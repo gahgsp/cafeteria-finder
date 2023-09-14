@@ -11,6 +11,30 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 let map: mapboxgl.Map | null = null;
 
+function createRGBPoint({ r, g, b }: { r: number; g: number; b: number }) {
+    const diameter = 50;
+    const radius = diameter / 2;
+    const centerX = radius;
+    const centerY = radius;
+    const pixelData = new Uint8Array(diameter * diameter * 4); // Cada pixel tem um componente RGBA.
+
+    for (let y = 0; y < diameter; y++) {
+        for (let x = 0; x < diameter; x++) {
+            const distance = Math.sqrt((x - centerX) ** 2 + (y - centerY) ** 2);
+
+            if (distance <= radius) {
+                const index = (y * diameter + x) * 4;
+                pixelData[index] = r; // Vermelho
+                pixelData[index + 1] = g; // Verde
+                pixelData[index + 2] = b; // Azul
+                pixelData[index + 3] = 255; // Alfa (255 = totalmente opaco)
+            }
+        }
+    }
+
+    return { width: diameter, height: diameter, data: pixelData };
+}
+
 function createMap() {
     mapboxgl.accessToken = 'pk.eyJ1IjoiYWdlbmNlc3R1ZGlvbWV0YSIsImEiOiJjanh5ZW81aHEwOHV3M2lwZzhhNW1vdXl5In0.3hbV2QKVzZWf511JK9xCug'; // Replace with your Mapbox Access Token
 
@@ -22,6 +46,10 @@ function createMap() {
     });
 
     map.on('load', () => {
+
+        // Adiciona ao mapa a definição de uma imagem. No caso, um ponto RGB 2D.
+        map.addImage('#ADC178', createRGBPoint({ r: 173, g: 193, b: 120 }))
+
         // Definição da fonte de dados.
         map.addSource('source', {
             type: 'geojson',
@@ -63,39 +91,25 @@ function createMap() {
 
         // Configuraçōes de um marcador individual.
         map.addLayer({
-            id: "unclustered-point",
-            type: "circle",
-            source: "source",
-            filter: ["!", ["has", "point_count"]],
+            id: 'unclustered-point',
+            type: 'symbol',
+            source: 'source',
+            layout: {
+                'icon-image': ['get', 'color'],
+                'icon-size': 0.25,
+                'text-field': ['get', 'name'],
+                'text-size': 12,
+                'text-offset': [0, 0.5],
+                'text-anchor': 'top',
+                'icon-allow-overlap': true,
+            },
             paint: {
-                "circle-color": "#51bbd6",
-                "circle-radius": 8,
-                "circle-stroke-width": 1,
-                "circle-stroke-color": "#fff"
-            }
+                'text-color': '#7E6C56',
+                'text-halo-color': '#FFF',
+                'text-halo-width': 1,
+                'text-halo-blur': 0,
+            },
         })
-
-        // TODO: Usar de exemplo, as propriedades após o 'get' devem estar no .json.
-        //     map.addLayer({
-        //     id: 'layer',
-        //     type: 'symbol',
-        //     source: 'source',
-        //     layout: {
-        //       'icon-image': ['get', 'marker-color'],
-        //       'icon-size': 0.25,
-        //       'text-field': ['get', 'shortname'],
-        //       'text-size': 12,
-        //       'text-offset': [0, 0.5],
-        //       'text-anchor': 'top',
-        //       'icon-allow-overlap': true,
-        //     },
-        //     paint: {
-        //       'text-color': '#7e6c56',
-        //       'text-halo-color': '#fff',
-        //       'text-halo-width': 1,
-        //       'text-halo-blur': 0,
-        //     },
-        //   })
 
         map.addControl(
             new MapboxGeocoder({
@@ -113,7 +127,7 @@ function createMap() {
             return
         }
 
-        console.log(e.features[0].geometry.coordinates.slice())
+        console.log(e.features[0])
     })
 
     // const handleOnClick = async (position: any) => {
