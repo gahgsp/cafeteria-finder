@@ -26,11 +26,27 @@ const router = createRouter({
       meta: {
         requiresAuth: true
       },
+    },
+    {
+      path: '/favorites',
+      name: 'favorites',
+      component: () => import('../views/FavoritesView.vue'),
+      meta: {
+        requiresAuth: true
+      },
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: () => import('../views/SettingsView.vue'),
+      meta: {
+        requiresAuth: true
+      },
     }
   ]
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
   const store = useUserStore()
   if (to.meta.requiresAuth && !store.isLoggedIn()) {
     next({ path: '/login' })

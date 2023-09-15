@@ -1,11 +1,30 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { RouterView } from 'vue-router'
+import { RouterView, useRouter, useRoute } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 
 const store = useUserStore()
-
 const isLoggedIn = computed(() => store.isLoggedIn())
+
+const router = useRouter()
+const location = useRoute()
+
+function onClickFinder() {
+  router.push('/finder')
+}
+
+function onClickFavorites() {
+  router.push('/favorites')
+}
+
+function onClickSettings() {
+  router.push('/settings')
+}
+
+function isCurrentPath(path: string) {
+  return location.path === path
+}
+
 </script>
 
 <template>
@@ -15,15 +34,15 @@ const isLoggedIn = computed(() => store.isLoggedIn())
     </v-toolbar>
     <RouterView />
     <v-bottom-navigation v-if="isLoggedIn">
-      <v-btn value="search">
+      <v-btn value="finder" @click="onClickFinder" :disabled="isCurrentPath('/finder')">
         <v-icon>mdi-map-marker</v-icon>
         <span>Pesquisar</span>
       </v-btn>
-      <v-btn value="favorites">
+      <v-btn value="favorites" @click="onClickFavorites" :disabled="isCurrentPath('/favorites')">
         <v-icon>mdi-heart</v-icon>
         <span>Favoritos</span>
       </v-btn>
-      <v-btn value="settings">
+      <v-btn value="settings" @click="onClickSettings" :disabled="isCurrentPath('/settings')">
         <v-icon>mdi-cog</v-icon>
         <span>Configuraçōes</span>
       </v-btn>
