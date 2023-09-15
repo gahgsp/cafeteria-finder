@@ -151,8 +151,8 @@ onBeforeUnmount(() => {
   
 <style scoped>
 .map-container {
-    width: 80vw;
-    height: 90vh;
+    min-width: 100px;
+    min-height: 80vh;
 }
 </style>
   

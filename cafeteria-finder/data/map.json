@@ -5,7 +5,10 @@
             "type": "Feature",
             "properties": {
                 "name": "Cafeteria Pão de Mel",
-                "color": "#ADC178"
+                "color": "#ADC178",
+                "address": "Rua da Batatinha, 123, 99999-99, Blumenau",
+                "phone": "(47) 3332-3332",
+                "shift": "08:00 - 18:00"
             },
             "geometry": {
                 "coordinates": [
@@ -19,7 +22,10 @@
             "type": "Feature",
             "properties": {
                 "name": "Padaria da 7",
-                "color": "#ADC178"
+                "color": "#ADC178",
+                "address": "Rua da Batatinha, 123, 99999-99, Blumenau",
+                "phone": "(47) 3332-3332",
+                "shift": "08:00 - 18:00"
             },
             "geometry": {
                 "coordinates": [
@@ -33,7 +39,10 @@
             "type": "Feature",
             "properties": {
                 "name": "Café de Vó",
-                "color": "#ADC178"
+                "color": "#ADC178",
+                "address": "Rua da Batatinha, 123, 99999-99, Blumenau",
+                "phone": "(47) 3332-3332",
+                "shift": "08:00 - 18:00"
             },
             "geometry": {
                 "coordinates": [

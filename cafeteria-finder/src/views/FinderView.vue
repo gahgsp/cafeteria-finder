@@ -1,84 +1,135 @@
-<!-- <script setup lang="ts">
-import { ref } from "vue";
-import { MapboxMap } from '@studiometa/vue-mapbox-gl';
-
-const mapCenter = ref([0, 0]);
-</script>
-
 <template>
-    <main style="display: flex; justify-content: center; align-items: center;">
-        <MapboxMap style="height: 100vh; width: 100vw"
-            access-token="pk.eyJ1IjoiYWdlbmNlc3R1ZGlvbWV0YSIsImEiOiJjanh5ZW81aHEwOHV3M2lwZzhhNW1vdXl5In0.3hbV2QKVzZWf511JK9xCug"
-            map-style="mapbox://styles/mapbox/streets-v11" :center="mapCenter" :zoom="" />
-    </main>
-</template> -->
-
-<template>
-    <v-app>
-        <v-main>
-            <v-row>
-                <v-col cols="2" style="max-width: 300px;">
-                    <aside>
-                        <v-container>
-                            <v-row style="display: flex; justify-content: center; align-items: center;">
-                                <v-col cols="4">
-                                    <v-avatar color="info" size="x-large">
-                                        64
-                                    </v-avatar>
-                                </v-col>
-                                <v-col cols>
-                                    <span class="text-h6">User Name</span>
-                                </v-col>
-                            </v-row>
-                            <v-divider style="margin: 1em 0;"></v-divider>
-                            <v-row>
-                                <v-col cols="4">
-                                    <span> <v-icon>mdi-map</v-icon></span>
-                                </v-col>
-                                <v-col cols="8">
-                                    <span>Search</span>
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="4">
-                                    <span> <v-icon>mdi-heart</v-icon></span>
-                                </v-col>
-                                <v-col cols="8">
-                                    <span>Favorites</span>
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="4">
-                                    <span> <v-icon>mdi-cog</v-icon></span>
-                                </v-col>
-                                <v-col cols="8">
-                                    <span>Settings</span>
-                                </v-col>
-                            </v-row>
-                            <v-divider style="margin: 1em 0;"></v-divider>
-                            <v-row>
-                                <v-col cols="4">
-                                    <span> <v-icon>mdi-home</v-icon></span>
-                                </v-col>
-                                <v-col cols="8">
-                                    <span>Log Out</span>
-                                </v-col>
-                            </v-row>
-                        </v-container>
-                    </aside>
-                </v-col>
-                <v-col cols="8">
-                    <!-- Map -->
+    <v-main>
+        <v-container>
+            <v-row no-gutters>
+                <v-col cols="12" md="12">
                     <MapboxMap />
-                    <v-navigation-drawer v-model="selectedCafeteria" location="bottom" temporary
-                        @update:model-value="onModelChange">
-                        <div>{{ JSON.stringify(selectedCafeteria) }}</div>
-                    </v-navigation-drawer>
-
                 </v-col>
             </v-row>
-        </v-main>
-    </v-app>
+            <v-navigation-drawer v-model="selectedCafeteria" location="bottom" :temporary="true"
+                @update:model-value="onModelChange">
+                <v-container>
+                    <v-row no-gutters>
+                        <v-col cols="11">
+                            <span class="text-h5">{{ selectedCafeteria ? selectedCafeteria['properties']['name'] : ''
+                            }}</span>
+                        </v-col>
+                        <v-col cols="1">
+                            <v-icon>mdi-heart</v-icon>
+                        </v-col>
+                        <v-col cols="12">
+                            <v-icon>mdi-clock</v-icon>
+                            <span class="text-body-2 font-weight-bold">15 minutos para chegar</span>
+                        </v-col>
+                    </v-row>
+                    <v-row no-gutters style="padding-top: 12px; padding-bottom: 12px;">
+                        <v-col cols="12">
+                            <v-divider />
+                        </v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                        <v-col cols="12">
+                            <span class="text-caption">Endereço:&nbsp;</span>
+                            <span class="text-caption font-weight-bold">{{ selectedCafeteria ?
+                                selectedCafeteria['properties']['address']
+                                : '' }}</span>
+                        </v-col>
+                        <v-col cols="12">
+                            <span class="text-caption">Telefone:&nbsp;</span>
+                            <span class="text-caption font-weight-bold">{{ selectedCafeteria ?
+                                selectedCafeteria['properties']['phone'] :
+                                '' }}</span>
+                        </v-col>
+                        <v-col cols="12">
+                            <span class="text-caption">Horário:&nbsp;</span>
+                            <span class="text-caption font-weight-bold">{{ selectedCafeteria ?
+                                selectedCafeteria['properties']['shift'] :
+                                '' }}</span>
+                        </v-col>
+                    </v-row>
+                    <v-row no-gutters style="padding-top: 12px; padding-bottom: 12px;">
+                        <v-col cols="12">
+                            <v-divider />
+                        </v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                        <v-col cols="12">
+                            <span class="text-subtitle-1 font-weight-bold">Ofertas Especiais</span>
+                        </v-col>
+                        <v-col cols="12">
+                            <v-slide-group>
+                                <v-slide-group-item>
+                                    <v-card width="100" height="200" class="ma-4">
+                                        <v-row align="center">
+                                            <v-col class="shrink">
+                                                <v-img src="//placehold.it/100x120" max-width="100"></v-img>
+                                            </v-col>
+                                            <v-col class="pt-0" align="center">
+                                                <v-card-title class="pb-0 pt-0 text-body-1">Oferta 1</v-card-title>
+                                                <v-card-subtitle class="text-body-2">R$ 10</v-card-subtitle>
+                                            </v-col>
+                                        </v-row>
+                                    </v-card>
+                                </v-slide-group-item>
+                                <v-slide-group-item>
+                                    <v-card width="100" height="200" class="ma-4">
+                                        <v-row align="center">
+                                            <v-col class="shrink">
+                                                <v-img src="//placehold.it/100x120" max-width="100"></v-img>
+                                            </v-col>
+                                            <v-col class="pt-0" align="center">
+                                                <v-card-title class="pb-0 pt-0 text-body-1">Oferta 2</v-card-title>
+                                                <v-card-subtitle class="text-body-2">R$ 10</v-card-subtitle>
+                                            </v-col>
+                                        </v-row>
+                                    </v-card>
+                                </v-slide-group-item>
+                                <v-slide-group-item>
+                                    <v-card width="100" height="200" class="ma-4">
+                                        <v-row align="center">
+                                            <v-col class="shrink">
+                                                <v-img src="//placehold.it/100x120" max-width="100"></v-img>
+                                            </v-col>
+                                            <v-col class="pt-0" align="center">
+                                                <v-card-title class="pb-0 pt-0 text-body-1">Oferta 3</v-card-title>
+                                                <v-card-subtitle class="text-body-2">R$ 10</v-card-subtitle>
+                                            </v-col>
+                                        </v-row>
+                                    </v-card>
+                                </v-slide-group-item>
+                                <v-slide-group-item>
+                                    <v-card width="100" height="200" class="ma-4">
+                                        <v-row align="center">
+                                            <v-col class="shrink">
+                                                <v-img src="//placehold.it/100x120" max-width="100"></v-img>
+                                            </v-col>
+                                            <v-col class="pt-0" align="center">
+                                                <v-card-title class="pb-0 pt-0 text-body-1">Oferta 4</v-card-title>
+                                                <v-card-subtitle class="text-body-2">R$ 10</v-card-subtitle>
+                                            </v-col>
+                                        </v-row>
+                                    </v-card>
+                                </v-slide-group-item>
+                                <v-slide-group-item>
+                                    <v-card width="100" height="200" class="ma-4">
+                                        <v-row align="center">
+                                            <v-col class="shrink">
+                                                <v-img src="//placehold.it/100x120" max-width="100"></v-img>
+                                            </v-col>
+                                            <v-col class="pt-0" align="center">
+                                                <v-card-title class="pb-0 pt-0 text-body-1">Oferta 5</v-card-title>
+                                                <v-card-subtitle class="text-body-2">R$ 10</v-card-subtitle>
+                                            </v-col>
+                                        </v-row>
+                                    </v-card>
+                                </v-slide-group-item>
+                            </v-slide-group>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-navigation-drawer>
+        </v-container>
+    </v-main>
 </template>
 
 <script setup lang="ts">
@@ -94,5 +145,10 @@ const onModelChange = (hasChanged: boolean) => {
         store.setSelectedCafeteria(null)
     }
 }
-
 </script>
+
+<style scoped>
+.v-navigation-drawer__scrim {
+    opacity: 0;
+}
+</style>
