@@ -1,0 +1,62 @@
+{
+    "cafes": [
+        {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "Cafeteria Pão de Mel",
+                        "color": "#ADC178",
+                        "address": "Rua da Batatinha, 123, 99999-99, Blumenau",
+                        "phone": "(47) 3332-3332",
+                        "shift": "08:00 - 18:00"
+                    },
+                    "geometry": {
+                        "coordinates": [
+                            -49.07219348286452,
+                            -26.911932898917755
+                        ],
+                        "type": "Point"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "Padaria da 7",
+                        "color": "#ADC178",
+                        "address": "Rua da Batatinha, 123, 99999-99, Blumenau",
+                        "phone": "(47) 3332-3332",
+                        "shift": "08:00 - 18:00"
+                    },
+                    "geometry": {
+                        "coordinates": [
+                            -49.07278664003377,
+                            -26.911508620410572
+                        ],
+                        "type": "Point"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "Café de Vó",
+                        "color": "#ADC178",
+                        "address": "Rua da Batatinha, 123, 99999-99, Blumenau",
+                        "phone": "(47) 3332-3332",
+                        "shift": "08:00 - 18:00"
+                    },
+                    "geometry": {
+                        "coordinates": [
+                            -49.07501418942374,
+                            -26.91049262438095
+                        ],
+                        "type": "Point"
+                    }
+                }
+            ]
+        }
+    ],
+    "users": [],
+    "favorites": []
+}
