@@ -3,7 +3,7 @@
 </template>
   
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount } from 'vue';
+import { onMounted, onBeforeUnmount, ref } from 'vue';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '@mapbox/mapbox-gl-geocoder/lib/mapbox-gl-geocoder.css';
@@ -11,6 +11,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { useMapStore } from '@/stores/map'
 
 const mapStore = useMapStore()
+
+const coffeeShops = ref<any>(null)
 
 let map: mapboxgl.Map | null = null;
 
@@ -56,7 +58,7 @@ function createMap() {
         // Definição da fonte de dados.
         map.addSource('source', {
             type: 'geojson',
-            data: '../../data/map.json',
+            data: coffeeShops.value,
             cluster: true,
             clusterMaxZoom: 15,
             clusterRadius: 20,
@@ -138,7 +140,10 @@ function createMap() {
     })
 }
 
-onMounted(() => {
+onMounted(async () => {
+    const { data } = await mapStore.loadCafeterias()
+
+    coffeeShops.value = (JSON.parse(data.value))[0]
     createMap()
 });
 
