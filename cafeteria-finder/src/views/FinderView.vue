@@ -15,11 +15,11 @@
                             }}</span>
                         </v-col>
                         <v-col cols="1">
-                            <v-icon>mdi-heart</v-icon>
+                            <v-btn density="compact" icon="mdi-heart" style="color: #F4978E;"></v-btn>
                         </v-col>
-                        <v-col cols="12">
+                        <v-col cols="12" style="display: flex; align-items: center;">
                             <v-icon>mdi-clock</v-icon>
-                            <span class="text-body-2 font-weight-bold">15 minutos para chegar</span>
+                            <span class="text-body-2 font-weight-bold ml-1">15 minutos para chegar</span>
                         </v-col>
                     </v-row>
                     <v-row no-gutters style="padding-top: 12px; padding-bottom: 12px;">
