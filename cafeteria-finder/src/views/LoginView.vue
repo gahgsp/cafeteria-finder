@@ -1,4 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user'
+
+const store = useUserStore()
+const router = useRouter()
+
+function handleLogin() {
+    store.login({ name: 'kelvin', password: '123456' })
+    router.push('/finder')
+}
+</script>
 
 <template>
     <main style="width: 100vw; height: 100vh;">
@@ -22,7 +33,7 @@
                     </v-row>
                     <v-row>
                         <v-col cols="12" style="display: flex; justify-content: space-around; align-items: center;">
-                            <v-btn variant="outlined">
+                            <v-btn variant="outlined" @click="handleLogin">
                                 Login
                             </v-btn>
                             <v-btn variant="outlined">

@@ -137,12 +137,13 @@ import { useMapStore } from '@/stores/map';
 import MapboxMap from '@/components/MapboxMap.vue'
 import { storeToRefs } from 'pinia';
 
-const store = useMapStore()
-const { selectedCafeteria } = storeToRefs(store)
+const mapStore = useMapStore()
+
+const { selectedCafeteria } = storeToRefs(mapStore)
 
 const onModelChange = (hasChanged: boolean) => {
     if (!hasChanged) {
-        store.setSelectedCafeteria(null)
+        mapStore.setSelectedCafeteria(null)
     }
 }
 </script>
