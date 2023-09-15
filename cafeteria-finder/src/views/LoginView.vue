@@ -11,9 +11,14 @@ const form = ref()
 const name = ref('')
 const password = ref('')
 
-function handleLogin() {
-    store.login({ name: toValue(name), password: toValue(password) })
-    router.push('/finder')
+const isErrorAlert = ref(false)
+
+async function handleLogin() {
+    const { isError } = await store.login({ name: toValue(name), password: toValue(password) })
+    if (!isError) {
+        router.push('/finder')
+    }
+    isErrorAlert.value = true
 }
 
 function handleRegister() {
@@ -33,12 +38,13 @@ function handleRegister() {
                     </v-row>
                     <v-row>
                         <v-col cols="12" md="12">
-                            <v-text-field label="Usuário" hide-details required></v-text-field>
+                            <v-text-field v-model="name" label="Usuário" hide-details required></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="12" md="12">
-                            <v-text-field label="Senha" type="password" hide-details required></v-text-field>
+                            <v-text-field v-model="password" label="Senha" type="password" hide-details
+                                required></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
@@ -54,5 +60,11 @@ function handleRegister() {
                 </v-col>
             </v-container>
         </v-form>
+        <v-snackbar v-model="isErrorAlert" timeout="5000"><span>Um erro ocorreu!</span><br /><span>Verifique se os dados
+                estão corretos.</span><template v-slot:actions>
+                <v-btn color="red" variant="text" @click="isErrorAlert = false">
+                    Fechar
+                </v-btn>
+            </template></v-snackbar>
     </main>
 </template>

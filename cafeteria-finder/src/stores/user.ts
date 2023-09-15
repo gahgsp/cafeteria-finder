@@ -6,8 +6,13 @@ import useCustomFetch from '@/composables/fetch'
 export const useUserStore = defineStore('user', () => {
     const currentUser = ref<any>(null)
 
-    function login(newUser: any) {
-        currentUser.value = newUser
+    async function login(user: any) {
+        const { data, error } = await useCustomFetch(`http://localhost:3001/users?name=${user.name}&password=${user.password}`)
+        if (!error.value) {
+            currentUser.value = JSON.parse(toValue(data))[0]
+            return { isError: false, user: toValue(currentUser) }
+        }
+        return { isError: true, user: null }
     }
 
     function isLoggedIn() {
