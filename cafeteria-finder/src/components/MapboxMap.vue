@@ -39,7 +39,7 @@ function createRGBPoint({ r, g, b }: { r: number; g: number; b: number }) {
 }
 
 function createMap() {
-    mapboxgl.accessToken = 'pk.eyJ1IjoiYWdlbmNlc3R1ZGlvbWV0YSIsImEiOiJjanh5ZW81aHEwOHV3M2lwZzhhNW1vdXl5In0.3hbV2QKVzZWf511JK9xCug'; // Replace with your Mapbox Access Token
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYWdlbmNlc3R1ZGlvbWV0YSIsImEiOiJjanh5ZW81aHEwOHV3M2lwZzhhNW1vdXl5In0.3hbV2QKVzZWf511JK9xCug';
 
     map = new mapboxgl.Map({
         container: 'map',
