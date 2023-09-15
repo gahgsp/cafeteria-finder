@@ -72,7 +72,7 @@ function createMap() {
                 'circle-color': '#d3cdc0',
                 'circle-stroke-color': '#a59a83',
                 'circle-stroke-width': 1,
-                'circle-radius': 10,
+                'circle-radius': 20,
             },
         })
 
@@ -99,10 +99,10 @@ function createMap() {
             source: 'source',
             layout: {
                 'icon-image': ['get', 'color'],
-                'icon-size': 0.25,
+                'icon-size': 0.5,
                 'text-field': ['get', 'name'],
                 'text-size': 12,
-                'text-offset': [0, 0.5],
+                'text-offset': [0, 1],
                 'text-anchor': 'top',
                 'icon-allow-overlap': true,
             },
