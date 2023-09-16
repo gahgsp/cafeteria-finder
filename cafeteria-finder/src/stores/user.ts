@@ -30,5 +30,10 @@ export const useUserStore = defineStore('user', () => {
         currentUser.value = null
     }
 
-    return { currentUser, login, isLoggedIn, register, logout }
+    async function deleteUser(userToBeDeleted: User) {
+        const { data, error } = await useCustomFetch(`http://localhost:3001/users/${userToBeDeleted.id}`).delete().json()
+        return { data: toValue(data), isError: !!toValue(error) }
+    }
+
+    return { currentUser, login, isLoggedIn, register, logout, deleteUser }
 })

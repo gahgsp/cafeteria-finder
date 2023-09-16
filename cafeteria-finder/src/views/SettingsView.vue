@@ -10,6 +10,12 @@ function handleLogout() {
     router.push('/login')
 }
 
+async function handleDeleteUser() {
+    const { isError } = await userStore.deleteUser(userStore.currentUser!)
+    if (!isError) {
+        router.push('/login')
+    }
+}
 
 </script>
 
@@ -19,7 +25,7 @@ function handleLogout() {
             <v-col cols="12">
                 <v-card>
                     <v-list density="compact">
-                        <v-list-item link>
+                        <v-list-item link @click="handleDeleteUser">
                             <v-list-item-title class="text-body-1">Excluir Conta</v-list-item-title>
                             <template v-slot:append>
                                 <v-avatar color="grey-lighten-1">
