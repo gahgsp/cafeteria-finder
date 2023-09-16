@@ -1,3 +1,30 @@
+<script setup lang="ts">
+import { useMapStore } from '@/stores/map';
+import { useFavoritesStore } from '@/stores/favorites'
+import MapboxMap from '@/components/MapboxMap.vue'
+import { storeToRefs } from 'pinia';
+import { toValue } from '@vueuse/core'
+
+const mapStore = useMapStore()
+const favoritesStore = useFavoritesStore()
+
+const { selectedCafeteria } = storeToRefs(mapStore)
+
+const onModelChange = (hasChanged: boolean) => {
+    if (!hasChanged) {
+        mapStore.setSelectedCafeteria(null)
+    }
+}
+
+const onHandleFavorite = () => {
+    const currentCafeteria = toValue(mapStore.selectedCafeteria)
+    if (!toValue(currentCafeteria)) {
+        return
+    }
+    favoritesStore.saveFavorite(currentCafeteria.id)
+}
+</script>
+
 <template>
     <v-main>
         <v-container>
@@ -15,7 +42,7 @@
                             }}</span>
                         </v-col>
                         <v-col cols="1">
-                            <v-btn density="compact" icon="mdi-heart" style="color: #F4978E;"></v-btn>
+                            <v-btn density="compact" icon="mdi-heart" @click="onHandleFavorite" style="color: #F4978E;" />
                         </v-col>
                         <v-col cols="12" style="display: flex; align-items: center;">
                             <v-icon>mdi-clock</v-icon>
@@ -131,22 +158,6 @@
         </v-container>
     </v-main>
 </template>
-
-<script setup lang="ts">
-import { useMapStore } from '@/stores/map';
-import MapboxMap from '@/components/MapboxMap.vue'
-import { storeToRefs } from 'pinia';
-
-const mapStore = useMapStore()
-
-const { selectedCafeteria } = storeToRefs(mapStore)
-
-const onModelChange = (hasChanged: boolean) => {
-    if (!hasChanged) {
-        mapStore.setSelectedCafeteria(null)
-    }
-}
-</script>
 
 <style scoped>
 .v-navigation-drawer__scrim {

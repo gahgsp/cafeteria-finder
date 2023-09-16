@@ -22,7 +22,7 @@ export const useUserStore = defineStore('user', () => {
     async function register(newUser: any) {
         const { data, error } = await useCustomFetch('http://localhost:3001/users').post(newUser)
         currentUser.value = toValue(data)
-        return { isError: !!error.value, user: JSON.parse(toValue(currentUser)) }
+        return { isError: !!toValue(error), user: JSON.parse(toValue(currentUser)) }
     }
 
     return { currentUser, login, isLoggedIn, register }
