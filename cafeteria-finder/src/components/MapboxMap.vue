@@ -151,13 +151,16 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div id="map" class="map-container"></div>
+    <v-card>
+        <div id="map" class="map-container"></div>
+    </v-card>
 </template>
   
 <style scoped>
 .map-container {
     min-width: 100px;
     min-height: 80vh;
+    border-radius: 4px;
 }
 </style>
   
