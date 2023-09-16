@@ -29,7 +29,7 @@ function handleRegister() {
 </script>
 
 <template>
-    <main style="width: 100vw; height: 100vh;">
+    <main>
         <v-form ref="form">
             <v-container style="display: flex; justify-content: center; align-items: center;">
                 <v-col cols="12">
