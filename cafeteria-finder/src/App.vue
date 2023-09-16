@@ -30,7 +30,7 @@ function isCurrentPath(path: string) {
 <template>
   <v-app style="background-color: rgba(255, 218, 185, 0.1);">
     <v-toolbar v-if="isLoggedIn" style="background-color: #F4978E;">
-      <v-toolbar-title style="color: #FFF">Bem vindo, Kelvin!</v-toolbar-title>
+      <v-toolbar-title style="color: #FFF">Bem vindo, {{ store.currentUser?.name }}!</v-toolbar-title>
     </v-toolbar>
     <RouterView />
     <v-bottom-navigation v-if="isLoggedIn">
