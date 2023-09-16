@@ -30,11 +30,18 @@ function onNavigateToFavorite(coffeeShop: CoffeeShop) {
         <v-row>
             <v-card>
                 <v-col cols="12" style="padding-bottom: 0">
-                    <div><span class="text-h5">Meus Favoritos</span></div>
-                    <v-divider style="margin-top: 12px;" />
+                    <div><span class="text-h5" style="color: #F08080;">Meus Favoritos</span></div>
+                    <v-divider style="margin-top: 12px; margin-bottom: 12px;" />
                 </v-col>
                 <v-col cols="12" style="padding-top: 0;">
-                    <v-list lines="two" density="compact">
+                    <v-alert color="red" variant="outlined" v-if="!favoriteCoffeeShops.length">
+                        <template v-slot:title>
+                            Nenhum Favorito Encontrado
+                        </template>
+                        Aparentemente você não possui cafeterias favoritas. ):<br>
+                        Que tal pesquisar por alguma na sua região?
+                    </v-alert>
+                    <v-list lines="two" density="compact" v-if="favoriteCoffeeShops.length">
                         <v-list-item v-for="coffeeShop in favoriteCoffeeShops" :key="coffeeShop.id"
                             :title="coffeeShop.properties.name" :subtitle="coffeeShop.properties.address"
                             style="padding-left: 0px;">
