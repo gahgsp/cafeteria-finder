@@ -27,14 +27,14 @@ function onNavigateToFavorite(coffeeShop: CoffeeShop) {
 
 <template>
     <v-container>
-        <v-row style="display: flex;">
+        <v-row>
             <v-card>
                 <v-col cols="12" style="padding-bottom: 0">
                     <div><span class="text-h5">Meus Favoritos</span></div>
                     <v-divider style="margin-top: 12px;" />
                 </v-col>
                 <v-col cols="12" style="padding-top: 0;">
-                    <v-list lines="two">
+                    <v-list lines="two" density="compact">
                         <v-list-item v-for="coffeeShop in favoriteCoffeeShops" :key="coffeeShop.id"
                             :title="coffeeShop.properties.name" :subtitle="coffeeShop.properties.address"
                             style="padding-left: 0px;">
