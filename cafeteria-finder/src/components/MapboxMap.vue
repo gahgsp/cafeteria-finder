@@ -50,7 +50,7 @@ function createMap() {
     map.on('load', () => {
 
         // Adiciona ao mapa a definição de uma imagem. No caso, um ponto RGB 2D.
-        map.addImage('#ADC178', createRGBPoint({ r: 173, g: 193, b: 120 }))
+        map.addImage('#F08080', createRGBPoint({ r: 240, g: 128, b: 128 }))
 
         // Definição da fonte de dados.
         map.addSource('source', {
@@ -68,8 +68,8 @@ function createMap() {
             source: 'source',
             filter: ['has', 'point_count'],
             paint: {
-                'circle-color': '#d3cdc0',
-                'circle-stroke-color': '#a59a83',
+                'circle-color': '#F8AD9D',
+                'circle-stroke-color': '#F4978E',
                 'circle-stroke-width': 1,
                 'circle-radius': 20,
             },
@@ -106,8 +106,8 @@ function createMap() {
                 'icon-allow-overlap': true,
             },
             paint: {
-                'text-color': '#7E6C56',
-                'text-halo-color': '#FFF',
+                'text-color': '#F08080',
+                'text-halo-color': '#FFDAB9',
                 'text-halo-width': 1,
                 'text-halo-blur': 0,
             },
