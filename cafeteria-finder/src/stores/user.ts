@@ -26,5 +26,9 @@ export const useUserStore = defineStore('user', () => {
         return { isError: !!toValue(error), user: toValue(currentUser) }
     }
 
-    return { currentUser, login, isLoggedIn, register }
+    function logout() {
+        currentUser.value = null
+    }
+
+    return { currentUser, login, isLoggedIn, register, logout }
 })
