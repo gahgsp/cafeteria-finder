@@ -13,6 +13,7 @@ function handleLogout() {
 async function handleDeleteUser() {
     const { isError } = await userStore.deleteUser(userStore.currentUser!)
     if (!isError) {
+        userStore.logout()
         router.push('/login')
     }
 }
