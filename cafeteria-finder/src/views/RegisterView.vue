@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { toValue } from '@vueuse/core'
 import { useUserStore } from '@/stores/user'
+import type { User } from '@/types'
 
 const router = useRouter()
 
@@ -16,7 +17,7 @@ const password = ref('')
 const confirmPassword = ref('')
 
 async function onSubmit() {
-    const newUser = {
+    const newUser: User = {
         name: toValue(name),
         email: toValue(email),
         password: toValue(password)

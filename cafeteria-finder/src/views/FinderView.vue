@@ -8,7 +8,7 @@ import { toValue } from '@vueuse/core'
 const mapStore = useMapStore()
 const favoritesStore = useFavoritesStore()
 
-const { selectedCafeteria } = storeToRefs(mapStore)
+const { selectedCoffeeShop } = storeToRefs(mapStore)
 
 const onModelChange = (hasChanged: boolean) => {
     if (!hasChanged) {
@@ -17,11 +17,11 @@ const onModelChange = (hasChanged: boolean) => {
 }
 
 const onHandleFavorite = () => {
-    const currentCafeteria = toValue(mapStore.selectedCafeteria)
-    if (!toValue(currentCafeteria)) {
+    const currentCoffeeShop = toValue(mapStore.selectedCoffeeShop)
+    if (!toValue(currentCoffeeShop)) {
         return
     }
-    favoritesStore.saveFavorite(currentCafeteria.id)
+    favoritesStore.saveFavorite(currentCoffeeShop.id)
 }
 </script>
 
@@ -33,12 +33,12 @@ const onHandleFavorite = () => {
                     <MapboxMap />
                 </v-col>
             </v-row>
-            <v-navigation-drawer v-model="selectedCafeteria" location="bottom" :temporary="true"
+            <v-navigation-drawer v-model="selectedCoffeeShop" location="bottom" :temporary="true"
                 @update:model-value="onModelChange">
                 <v-container>
                     <v-row no-gutters>
                         <v-col cols="11">
-                            <span class="text-h5">{{ selectedCafeteria ? selectedCafeteria['properties']['name'] : ''
+                            <span class="text-h5">{{ selectedCoffeeShop ? selectedCoffeeShop['properties']['name'] : ''
                             }}</span>
                         </v-col>
                         <v-col cols="1">
@@ -57,20 +57,20 @@ const onHandleFavorite = () => {
                     <v-row no-gutters>
                         <v-col cols="12">
                             <span class="text-caption">Endereço:&nbsp;</span>
-                            <span class="text-caption font-weight-bold">{{ selectedCafeteria ?
-                                selectedCafeteria['properties']['address']
+                            <span class="text-caption font-weight-bold">{{ selectedCoffeeShop ?
+                                selectedCoffeeShop['properties']['address']
                                 : '' }}</span>
                         </v-col>
                         <v-col cols="12">
                             <span class="text-caption">Telefone:&nbsp;</span>
-                            <span class="text-caption font-weight-bold">{{ selectedCafeteria ?
-                                selectedCafeteria['properties']['phone'] :
+                            <span class="text-caption font-weight-bold">{{ selectedCoffeeShop ?
+                                selectedCoffeeShop['properties']['phone'] :
                                 '' }}</span>
                         </v-col>
                         <v-col cols="12">
                             <span class="text-caption">Horário:&nbsp;</span>
-                            <span class="text-caption font-weight-bold">{{ selectedCafeteria ?
-                                selectedCafeteria['properties']['shift'] :
+                            <span class="text-caption font-weight-bold">{{ selectedCoffeeShop ?
+                                selectedCoffeeShop['properties']['shift'] :
                                 '' }}</span>
                         </v-col>
                     </v-row>

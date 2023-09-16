@@ -1,18 +1,19 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import useCustomFetch from '@/composables/fetch'
+import type { CoffeeShop } from '@/types'
 
 export const useMapStore = defineStore('map', () => {
-    const selectedCafeteria = ref(null)
+    const selectedCoffeeShop = ref<CoffeeShop | null>(null)
 
-    async function loadCafeterias() {
-        const response = await useCustomFetch('http://localhost:3001/cafes')
+    async function loadCoffeeShops() {
+        const response = await useCustomFetch<CoffeeShop>('http://localhost:3001/cafes').get().json()
         return response
     }
 
-    function setSelectedCafeteria(newCafeteria: any) {
-        selectedCafeteria.value = newCafeteria
+    function setSelectedCafeteria(newCoffeeShop: CoffeeShop) {
+        selectedCoffeeShop.value = newCoffeeShop
     }
 
-    return { loadCafeterias, selectedCafeteria, setSelectedCafeteria }
+    return { loadCoffeeShops, selectedCoffeeShop, setSelectedCafeteria }
 })

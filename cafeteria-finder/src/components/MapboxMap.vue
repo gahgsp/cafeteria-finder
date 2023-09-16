@@ -1,7 +1,3 @@
-<template>
-    <div id="map" class="map-container"></div>
-</template>
-  
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount, ref } from 'vue';
 import mapboxgl from 'mapbox-gl';
@@ -9,6 +5,7 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '@mapbox/mapbox-gl-geocoder/lib/mapbox-gl-geocoder.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useMapStore } from '@/stores/map'
+import { toValue } from '@vueuse/core';
 
 const mapStore = useMapStore()
 
@@ -58,7 +55,7 @@ function createMap() {
         // Definição da fonte de dados.
         map.addSource('source', {
             type: 'geojson',
-            data: coffeeShops.value,
+            data: toValue(coffeeShops),
             cluster: true,
             clusterMaxZoom: 15,
             clusterRadius: 20,
@@ -141,9 +138,9 @@ function createMap() {
 }
 
 onMounted(async () => {
-    const { data } = await mapStore.loadCafeterias()
+    const { data } = await mapStore.loadCoffeeShops()
 
-    coffeeShops.value = (JSON.parse(data.value))[0]
+    coffeeShops.value = toValue(data)[0]
     createMap()
 });
 
@@ -153,6 +150,10 @@ onBeforeUnmount(() => {
     }
 });
 </script>
+
+<template>
+    <div id="map" class="map-container"></div>
+</template>
   
 <style scoped>
 .map-container {
