@@ -66,11 +66,15 @@ function handleRegister() {
                 </v-col>
             </v-container>
         </v-form>
-        <v-snackbar v-model="isErrorAlert" timeout="5000"><span>Um erro ocorreu!</span><br /><span>Verifique se os dados
-                estão corretos.</span><template v-slot:actions>
+        <v-snackbar v-model="isErrorAlert" timeout="5000" color="#F08080" variant="tonal">
+            <span>Um erro ocorreu!</span>
+            <br />
+            <span>Verifique se os dados estão corretos.</span>
+            <template v-slot:actions>
                 <v-btn color="red" variant="text" @click="isErrorAlert = false">
                     Fechar
                 </v-btn>
-            </template></v-snackbar>
+            </template>
+        </v-snackbar>
     </main>
 </template>

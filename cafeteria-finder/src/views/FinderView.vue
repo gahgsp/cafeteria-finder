@@ -4,11 +4,14 @@ import { useFavoritesStore } from '@/stores/favorites'
 import MapboxMap from '@/components/MapboxMap.vue'
 import { storeToRefs } from 'pinia';
 import { toValue } from '@vueuse/core'
+import { ref } from 'vue';
 
 const mapStore = useMapStore()
 const favoritesStore = useFavoritesStore()
 
 const { selectedCoffeeShop } = storeToRefs(mapStore)
+
+const isShowingFavoriteAlert = ref(false)
 
 const onModelChange = (hasChanged: boolean) => {
     if (!hasChanged) {
@@ -22,6 +25,7 @@ const onHandleFavorite = () => {
         return
     }
     favoritesStore.saveFavorite(currentCoffeeShop.id)
+    isShowingFavoriteAlert.value = true
 }
 </script>
 
@@ -31,6 +35,14 @@ const onHandleFavorite = () => {
             <v-row no-gutters>
                 <v-col cols="12" md="12">
                     <MapboxMap />
+                    <v-snackbar v-model="isShowingFavoriteAlert" timeout="2000" color="#00E676" style="z-index: 99999;">
+                        <span style="color: #FFF">Cafeteria adicionada aos Favoritos com sucesso.</span>
+                        <template v-slot:actions>
+                            <v-btn color="white" variant="text" @click="isShowingFavoriteAlert = false">
+                                Fechar
+                            </v-btn>
+                        </template>
+                    </v-snackbar>
                 </v-col>
             </v-row>
             <v-navigation-drawer v-model="selectedCoffeeShop" location="bottom" :temporary="true"
@@ -57,21 +69,18 @@ const onHandleFavorite = () => {
                     <v-row no-gutters>
                         <v-col cols="12">
                             <span class="text-caption">Endereço:&nbsp;</span>
-                            <span class="text-caption font-weight-bold" style="color: #F08080;">{{ selectedCoffeeShop ?
-                                selectedCoffeeShop['properties']['address']
-                                : '' }}</span>
+                            <span class="text-caption font-weight-bold" style="color: #F08080;">{{
+                                selectedCoffeeShop?.properties.address }}</span>
                         </v-col>
                         <v-col cols="12">
                             <span class="text-caption">Telefone:&nbsp;</span>
-                            <span class="text-caption font-weight-bold" style="color: #F08080;">{{ selectedCoffeeShop ?
-                                selectedCoffeeShop['properties']['phone'] :
-                                '' }}</span>
+                            <span class="text-caption font-weight-bold" style="color: #F08080;">{{
+                                selectedCoffeeShop?.properties.phone }}</span>
                         </v-col>
                         <v-col cols="12">
                             <span class="text-caption">Horário:&nbsp;</span>
-                            <span class="text-caption font-weight-bold" style="color: #F08080;">{{ selectedCoffeeShop ?
-                                selectedCoffeeShop['properties']['shift'] :
-                                '' }}</span>
+                            <span class="text-caption font-weight-bold" style="color: #F08080;">{{
+                                selectedCoffeeShop?.properties.shift }}</span>
                         </v-col>
                     </v-row>
                     <v-row no-gutters style="padding-top: 12px; padding-bottom: 12px;">
