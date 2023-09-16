@@ -71,7 +71,7 @@ function createMap() {
                 'circle-color': '#F8AD9D',
                 'circle-stroke-color': '#F4978E',
                 'circle-stroke-width': 1,
-                'circle-radius': 20,
+                'circle-radius': 30,
             },
         })
 
