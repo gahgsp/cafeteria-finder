@@ -29,6 +29,10 @@ async function onSubmit() {
         router.push('/finder')
     }
 }
+
+function onCancel() {
+    router.push('/login')
+}
 </script>
 
 <template>
@@ -82,7 +86,7 @@ async function onSubmit() {
                             <v-btn variant="tonal" type="submit" @click="onSubmit" size="large" style="color:#F4978E;">
                                 Registrar
                             </v-btn>
-                            <v-btn variant="tonal" size="large" style="color:#F8AD9D;">
+                            <v-btn variant="tonal" size="large" style="color:#F8AD9D;" @click="onCancel">
                                 Cancelar
                             </v-btn>
                         </v-col>
