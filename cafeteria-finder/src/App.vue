@@ -28,7 +28,7 @@ function isCurrentPath(path: string) {
 </script>
 
 <template>
-  <v-app>
+  <v-app style="background-color: rgba(255, 218, 185, 0.1);">
     <v-toolbar v-if="isLoggedIn">
       <v-toolbar-title>Bem vindo, Kelvin!</v-toolbar-title>
     </v-toolbar>
