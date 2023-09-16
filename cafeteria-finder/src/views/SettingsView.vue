@@ -29,7 +29,7 @@ async function handleDeleteUser() {
                         <v-list-item link @click="handleDeleteUser">
                             <v-list-item-title class="text-body-1">Excluir Conta</v-list-item-title>
                             <template v-slot:append>
-                                <v-avatar color="grey-lighten-1">
+                                <v-avatar color="#FFDAB9">
                                     <v-icon color="white">mdi-delete</v-icon>
                                 </v-avatar>
                             </template>
@@ -38,7 +38,7 @@ async function handleDeleteUser() {
                         <v-list-item link @click="handleLogout">
                             <v-list-item-title class="text-body-1">Encerrar Sessão</v-list-item-title>
                             <template v-slot:append>
-                                <v-avatar color="grey-lighten-1">
+                                <v-avatar color="#F08080">
                                     <v-icon color="white">mdi-logout</v-icon>
                                 </v-avatar>
                             </template>
