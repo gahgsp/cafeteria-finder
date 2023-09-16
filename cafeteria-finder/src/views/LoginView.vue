@@ -56,10 +56,10 @@ function handleRegister() {
                     <v-row>
                         <v-col cols="12" style="display: flex; justify-content: space-around; align-items: center;">
                             <v-btn variant="tonal" @click="handleLogin" size="large" style="color:#F4978E;">
-                                Login
+                                Entrar
                             </v-btn>
                             <v-btn variant="tonal" size="large" @click="handleRegister" style="color: #F8AD9D">
-                                Register
+                                Registrar
                             </v-btn>
                         </v-col>
                     </v-row>
