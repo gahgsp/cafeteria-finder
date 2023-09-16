@@ -43,7 +43,7 @@ function createMap() {
     map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
-        center: [-49.07277033480926, -26.915345661590365], // Blumenau
+        center: mapStore.selectedCoffeeShop?.geometry.coordinates || [-49.07277033480926, -26.915345661590365], // Blumenau
         zoom: 15,
     });
 
@@ -133,13 +133,12 @@ function createMap() {
         // Pra calcular, ver comentario no post https://stackoverflow.com/questions/61385266/getting-total-duration-and-distance-on-mapbox-javascript
         // const response = await fetch('https://api.mapbox.com/directions/v5/mapbox/driving/-8.61767353533753,42.102184359031504;-8.495246688170312,41.44289308091726?steps=true&geometries=geojson&access_token=pk.eyJ1IjoiYWdlbmNlc3R1ZGlvbWV0YSIsImEiOiJjanh5ZW81aHEwOHV3M2lwZzhhNW1vdXl5In0.3hbV2QKVzZWf511JK9xCug')
         // console.log(response.json())
-        mapStore.setSelectedCafeteria(e.features[0])
+        mapStore.setSelectedCoffeeShop(e.features[0])
     })
 }
 
 onMounted(async () => {
     const { data } = await mapStore.loadCoffeeShops()
-
     coffeeShops.value = toValue(data)[0]
     createMap()
 });

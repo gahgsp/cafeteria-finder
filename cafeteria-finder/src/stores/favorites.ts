@@ -2,15 +2,21 @@ import { defineStore } from 'pinia'
 import useCustomFetch from '@/composables/fetch'
 import { toValue } from '@vueuse/core'
 import { useUserStore } from '@/stores/user'
+import type { Favorite } from '@/types'
 
 export const useFavoritesStore = defineStore('favorites', () => {
 
     const userStore = useUserStore()
 
-    async function saveFavorite(coffeeShopId: string) {
-        const { data, error } = useCustomFetch('http://localhost:3001/favorites').post({ coffeeShopId, userId: toValue(userStore.currentUser).id })
-        return { isError: toValue(error), favorite: toValue(data) }
+    async function loadFavorites(): Promise<{ favorites: Favorite[], isError: boolean }> {
+        const { data, error } = await useCustomFetch<Favorite[]>(`http://localhost:3001/favorites?userId=${toValue(userStore.currentUser)?.id}`).get().json()
+        return { favorites: toValue(data), isError: !!toValue(error) }
     }
 
-    return { saveFavorite }
+    async function saveFavorite(coffeeShopId: number): Promise<{ favorite: Favorite, isError: boolean }> {
+        const { data, error } = await useCustomFetch<Favorite>('http://localhost:3001/favorites').post({ coffeeShopId, userId: toValue(userStore.currentUser)?.id }).json()
+        return { isError: !!toValue(error), favorite: toValue(data) }
+    }
+
+    return { loadFavorites, saveFavorite }
 })

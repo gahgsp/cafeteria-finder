@@ -21,7 +21,7 @@ export const useUserStore = defineStore('user', () => {
     }
 
     async function register(newUser: User): Promise<{ user: User | null, isError: boolean }> {
-        const { data, error } = await useCustomFetch<User>('http://localhost:3001/users').post(newUser).get().json()
+        const { data, error } = await useCustomFetch<User>('http://localhost:3001/users').post(newUser).json()
         currentUser.value = toValue(data)
         return { isError: !!toValue(error), user: toValue(currentUser) }
     }

@@ -12,13 +12,13 @@ const { selectedCoffeeShop } = storeToRefs(mapStore)
 
 const onModelChange = (hasChanged: boolean) => {
     if (!hasChanged) {
-        mapStore.setSelectedCafeteria(null)
+        mapStore.setSelectedCoffeeShop(null)
     }
 }
 
 const onHandleFavorite = () => {
     const currentCoffeeShop = toValue(mapStore.selectedCoffeeShop)
-    if (!toValue(currentCoffeeShop)) {
+    if (!currentCoffeeShop) {
         return
     }
     favoritesStore.saveFavorite(currentCoffeeShop.id)

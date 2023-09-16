@@ -1,3 +1,54 @@
+<script setup lang="ts">
+import { onMounted, ref } from 'vue';
+import { useFavoritesStore } from '@/stores/favorites';
+import { useMapStore } from '@/stores/map';
+import type { CoffeeShop } from '@/types';
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const favoritesStore = useFavoritesStore()
+const mapStore = useMapStore()
+
+const favoriteCoffeeShops = ref<CoffeeShop[]>([])
+
+onMounted(async () => {
+    const { favorites } = await favoritesStore.loadFavorites()
+    const { coffeeShops } = await mapStore.loadSpecificCoffeeShops(favorites.map((favorite) => favorite.coffeeShopId))
+    favoriteCoffeeShops.value = coffeeShops
+})
+
+function onNavigateToFavorite(coffeeShop: CoffeeShop) {
+    mapStore.setSelectedCoffeeShop(coffeeShop)
+    router.push('/finder')
+}
+
+</script>
+
 <template>
-    <h2>Favorites View</h2>
+    <v-container>
+        <v-row style="display: flex;">
+            <v-col cols="12" style="padding-bottom: 0">
+                <div><span class="text-h5">Meus Favoritos</span></div>
+                <v-divider />
+            </v-col>
+            <v-col cols="12" style="padding-top: 0;">
+                <v-list lines="two">
+                    <v-list-item v-for="coffeeShop in favoriteCoffeeShops" :key="coffeeShop.id"
+                        :title="coffeeShop.properties.name" :subtitle="coffeeShop.properties.address"
+                        style="padding-left: 0px;">
+                        <template v-slot:prepend>
+                            <v-avatar color="grey-lighten-1">
+                                <v-icon color="white">mdi-coffee</v-icon>
+                            </v-avatar>
+                        </template>
+                        <template v-slot:append>
+                            <v-btn color="grey-lighten-1" icon="mdi-navigation-variant" variant="text"
+                                @click="onNavigateToFavorite(coffeeShop)" />
+                        </template>
+                    </v-list-item>
+                </v-list>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
