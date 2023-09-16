@@ -13,6 +13,8 @@ const password = ref('')
 
 const isErrorAlert = ref(false)
 
+const isPasswordVisible = ref(false)
+
 async function handleLogin() {
     const { isError } = await store.login({ name: toValue(name), password: toValue(password) })
     if (!isError) {
@@ -33,26 +35,30 @@ function handleRegister() {
                 <v-col cols="12">
                     <v-row>
                         <v-col cols="12" md="12">
-                            <span class="text-h2">Login</span>
+                            <span class="text-h2" style="color: #F08080;">Login</span>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="12" md="12">
-                            <v-text-field v-model="name" label="Usuário" hide-details required></v-text-field>
+                            <v-text-field v-model="name" label="Usuário" hide-details required density="compact"
+                                prepend-inner-icon="mdi-email-outline" variant="outlined"></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="12" md="12">
-                            <v-text-field v-model="password" label="Senha" type="password" hide-details
-                                required></v-text-field>
+                            <v-text-field v-model="password" label="Senha" hide-details required density="compact"
+                                :append-inner-icon="isPasswordVisible ? 'mdi-eye-off' : 'mdi-eye'"
+                                :type="isPasswordVisible ? 'text' : 'password'" prepend-inner-icon="mdi-lock-outline"
+                                variant="outlined"
+                                @click:append-inner="isPasswordVisible = !isPasswordVisible"></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="12" style="display: flex; justify-content: space-around; align-items: center;">
-                            <v-btn variant="outlined" @click="handleLogin">
+                            <v-btn variant="tonal" @click="handleLogin" size="large" style="color:#F4978E;">
                                 Login
                             </v-btn>
-                            <v-btn variant="outlined" @click="handleRegister">
+                            <v-btn variant="tonal" size="large" @click="handleRegister" style="color: #F8AD9D">
                                 Register
                             </v-btn>
                         </v-col>
