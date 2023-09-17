@@ -173,6 +173,19 @@ const onHandleFavorite = () => {
                             </v-slide-group>
                         </v-col>
                     </v-row>
+                    <v-row no-gutters style="padding-top: 12px; padding-bottom: 12px;">
+                        <v-col cols="12">
+                            <v-divider />
+                        </v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                        <v-col cols="12">
+                            <span class="text-subtitle-1 font-weight-bold" style="color: #F08080;">Avaliações</span>
+                        </v-col>
+                        <v-col cols="12">
+                            <v-rating density="comfortable" color="#F4978E"></v-rating>
+                        </v-col>
+                    </v-row>
                 </v-container>
             </v-navigation-drawer>
         </v-container>
