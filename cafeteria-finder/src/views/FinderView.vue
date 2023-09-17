@@ -12,7 +12,7 @@ const favoritesStore = useFavoritesStore()
 
 const { selectedCoffeeShop } = storeToRefs(mapStore)
 
-const isShowingCoffeeShopDetails = ref(false)
+const isShowingCoffeeShopDetails = ref(!!toValue(selectedCoffeeShop))
 const isShowingFavoriteAlert = ref(false)
 
 const coffeeShopRating = ref(0)
