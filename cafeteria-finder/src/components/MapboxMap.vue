@@ -5,16 +5,29 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '@mapbox/mapbox-gl-geocoder/lib/mapbox-gl-geocoder.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useMapStore } from '@/stores/map'
-import { toValue } from '@vueuse/core';
+import { toValue, watchDeep } from '@vueuse/core';
+import { storeToRefs } from 'pinia';
 
 // TODO: Remover o comentário e usar a API sem mock para a versão final.
 // const geolocation = useGeolocation()
 
 const mapStore = useMapStore()
+const { selectedCoffeeShop: watchableSelectedCoffeeShop } = storeToRefs(mapStore)
 
 const coffeeShops = ref<any>(null)
 
 let map: mapboxgl.Map | null = null;
+
+watchDeep(watchableSelectedCoffeeShop, (obj) => {
+    if (!obj) {
+        if (map.getLayer('route')) {
+            map.removeLayer('route')
+        }
+        if (map.getSource('route')) {
+            map.removeSource('route')
+        }
+    }
+})
 
 function createRGBPoint({ r, g, b }: { r: number; g: number; b: number }) {
     const diameter = 50;
