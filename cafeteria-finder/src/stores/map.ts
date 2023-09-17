@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import useCustomFetch from '@/composables/fetch'
-import type { CoffeeShop } from '@/types'
+import type { CoffeeShop, Rating } from '@/types'
 import { toValue } from '@vueuse/core'
 
 export const useMapStore = defineStore('map', () => {
@@ -27,5 +27,19 @@ export const useMapStore = defineStore('map', () => {
         selectedCoffeeShop.value = newCoffeeShop
     }
 
-    return { loadCoffeeShops, loadSpecificCoffeeShops, selectedCoffeeShop, setSelectedCoffeeShop }
+    async function updateCoffeeShopRating(coffeeShopId: number, newRating: number) {
+        const { data } = await useCustomFetch<Rating[]>(`http://localhost:3001/ratings?coffeShopId=${coffeeShopId}`).json()
+        if (toValue(data)!.length > 0) {
+            await useCustomFetch(`http://localhost:3001/ratings`).patch({ id: toValue(data)![0].id, coffeeShopId, rating: newRating })
+        } else {
+            await useCustomFetch(`http://localhost:3001/ratings`).post({ coffeeShopId, rating: newRating })
+        }
+    }
+
+    async function loadCoffeeShopRating(coffeeShopId: number): Promise<Rating> {
+        const { data } = await useCustomFetch<Rating>(`http://localhost:3001/ratings?coffeShopId=${coffeeShopId}`).json()
+        return toValue(data)
+    }
+
+    return { loadCoffeeShops, loadSpecificCoffeeShops, selectedCoffeeShop, setSelectedCoffeeShop, updateCoffeeShopRating, loadCoffeeShopRating }
 })

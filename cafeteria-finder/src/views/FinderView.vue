@@ -13,10 +13,17 @@ const { selectedCoffeeShop } = storeToRefs(mapStore)
 
 const isShowingFavoriteAlert = ref(false)
 
+const coffeeShopRating = ref(0)
+
 const onModelChange = (hasChanged: boolean) => {
     if (!hasChanged) {
+        coffeeShopRating.value = 0
         mapStore.setSelectedCoffeeShop(null)
     }
+}
+
+const onChangeRating = async (newRating: number | string) => {
+    await mapStore.updateCoffeeShopRating(toValue(mapStore.selectedCoffeeShop)!.id, Number(newRating))
 }
 
 const onHandleFavorite = () => {
@@ -183,7 +190,8 @@ const onHandleFavorite = () => {
                             <span class="text-subtitle-1 font-weight-bold" style="color: #F08080;">Avaliações</span>
                         </v-col>
                         <v-col cols="12">
-                            <v-rating density="comfortable" color="#F4978E"></v-rating>
+                            <v-rating v-model="coffeeShopRating" @update:model-value="onChangeRating" density="comfortable"
+                                color="#F4978E" />
                         </v-col>
                     </v-row>
                 </v-container>

@@ -25,3 +25,9 @@ export interface Favorite {
     userId: number,
     coffeeShopId: number
 }
+
+export interface Rating {
+    id?: number
+    coffeeShopId: number
+    rating: number
+}
