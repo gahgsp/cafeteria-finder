@@ -32,6 +32,7 @@ function handleOnClickSettings() {
           <AppHeader v-if="isLoggedIn" :name="store.currentUser!.name" />
           <RouterView />
           <AppFooter
+            v-if="isLoggedIn"
             :current-path="location.path"
             @on-click-finder="handleOnClickFinder"
             @on-click-favorites="handleOnClickFavorites"
