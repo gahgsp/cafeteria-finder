@@ -7,7 +7,7 @@ import type { User } from '@/types/index'
 export const useUserStore = defineStore('user', () => {
     const currentUser = ref<User | null>(null)
 
-    async function login(user: User): Promise<{ user: User | null, isError: boolean }> {
+    async function login(user: Omit<User, 'id' | 'email' >): Promise<{ user: User | null, isError: boolean }> {
         const { data, error } = await useCustomFetch<User>(`http://localhost:3001/users?name=${user.name}&password=${user.password}`).get().json()
         if (!error.value) {
             currentUser.value = toValue(data)[0]
