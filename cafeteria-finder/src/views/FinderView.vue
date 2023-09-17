@@ -57,8 +57,9 @@ const onHandleFavorite = () => {
                         </v-col>
                         <v-col cols="12" style="display: flex; align-items: center;">
                             <v-icon color="#FFDAB9">mdi-clock</v-icon>
-                            <span class="text-body-1 font-weight-bold ml-1">15 minutos para
-                                chegar</span>
+                            <span class="text-body-1 font-weight-bold ml-1">
+                                {{ Math.round(selectedCoffeeShop?.timeToArrive! / 60) }}
+                                minutos para chegar</span>
                         </v-col>
                     </v-row>
                     <v-row no-gutters style="padding-top: 12px; padding-bottom: 12px;">

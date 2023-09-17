@@ -17,6 +17,7 @@ export interface CoffeeShop {
     geometry: {
         coordinates: [number, number]
     }
+    timeToArrive?: number
 }
 
 export interface Favorite {

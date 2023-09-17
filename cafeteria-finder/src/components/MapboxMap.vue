@@ -7,6 +7,9 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { useMapStore } from '@/stores/map'
 import { toValue } from '@vueuse/core';
 
+// TODO: Remover o comentário e usar a API sem mock para a versão final.
+// const geolocation = useGeolocation()
+
 const mapStore = useMapStore()
 
 const coffeeShops = ref<any>(null)
@@ -125,15 +128,56 @@ function createMap() {
         )
     })
 
-    map.on('click', 'unclustered-point', (e: any) => {
+    map.on('click', 'unclustered-point', async (e: any) => {
         if (!e.features) {
+            mapStore.setSelectedCoffeeShop(null)
             return
         }
-        // Usar a API abaixo pra pegar a rota entre dois points e a distancia / tempo.
-        // Pra calcular, ver comentario no post https://stackoverflow.com/questions/61385266/getting-total-duration-and-distance-on-mapbox-javascript
-        // const response = await fetch('https://api.mapbox.com/directions/v5/mapbox/driving/-8.61767353533753,42.102184359031504;-8.495246688170312,41.44289308091726?steps=true&geometries=geojson&access_token=pk.eyJ1IjoiYWdlbmNlc3R1ZGlvbWV0YSIsImEiOiJjanh5ZW81aHEwOHV3M2lwZzhhNW1vdXl5In0.3hbV2QKVzZWf511JK9xCug')
-        // console.log(response.json())
+
+        if (map.getLayer('route')) {
+            map.removeLayer('route')
+        }
+        if (map.getSource('route')) {
+            map.removeSource('route')
+        }
+
         mapStore.setSelectedCoffeeShop(e.features[0])
+
+        const mockResponse = await fetch(`https://api.mapbox.com/directions/v5/mapbox/walking/${-49.06967512599098},${-26.91337301328545};${e.lngLat.lng},${e.lngLat.lat}?steps=true&geometries=geojson&access_token=pk.eyJ1IjoiYWdlbmNlc3R1ZGlvbWV0YSIsImEiOiJjanh5ZW81aHEwOHV3M2lwZzhhNW1vdXl5In0.3hbV2QKVzZWf511JK9xCug`)
+
+        let route: any = {}
+
+        await mockResponse.json().then((routeData) => route = routeData)
+
+        // Adiciona a fonte de dados com a geometria referente à melhor rota até a cafeteria.
+        map.addSource('route', {
+            type: 'geojson',
+            data: {
+                type: 'Feature',
+                properties: {},
+                geometry: {
+                    type: 'LineString',
+                    coordinates: route.routes[0].geometry.coordinates
+                }
+            }
+        });
+
+        // Adiciona a camada responsável por desenhar a rota retornada.
+        map.addLayer({
+            id: 'route',
+            type: 'line',
+            source: 'route',
+            layout: {
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            paint: {
+                'line-color': '#F4978E',
+                'line-width': 4
+            }
+        });
+
+        mapStore.setSelectedCoffeeShop({ ...mapStore.selectedCoffeeShop!, timeToArrive: route.routes[0].duration })
     })
 }
 
