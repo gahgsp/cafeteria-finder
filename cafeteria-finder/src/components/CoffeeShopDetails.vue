@@ -41,7 +41,6 @@ const onHandleChangeRating = (newRating: number | string) => {
   <v-navigation-drawer
     v-model="currentIsOpen"
     location="bottom"
-    :temporary="true"
     @update:model-value="onHandleModelChange"
   >
     <v-container>
@@ -226,6 +225,6 @@ const onHandleChangeRating = (newRating: number | string) => {
 
 <style scoped>
 .v-navigation-drawer__scrim {
-  opacity: 0;
+  display: none;
 }
 </style>
