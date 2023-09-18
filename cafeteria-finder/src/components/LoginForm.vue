@@ -8,9 +8,15 @@ const form = ref()
 const name = ref('')
 const password = ref('')
 
+const requiredRule = [(value: string) => !!value || 'Esse campo é obrigatório!']
+
 const isPasswordVisible = ref(false)
 
-const onHandleLogin = () => {
+const onHandleLogin = async () => {
+  const { valid } = await form.value.validate()
+  if (!valid) {
+    return
+  }
   emits('onLogin', { name: toValue(name), password: toValue(password) })
 }
 
@@ -20,7 +26,7 @@ const onHandleRegister = () => {
 </script>
 
 <template>
-  <v-form ref="form">
+  <v-form ref="form" @submit.prevent>
     <v-container style="display: flex; justify-content: center; align-items: center">
       <v-col cols="12">
         <v-row>
@@ -33,7 +39,7 @@ const onHandleRegister = () => {
             <v-text-field
               v-model="name"
               label="Usuário"
-              hide-details
+              :rules="requiredRule"
               required
               density="compact"
               prepend-inner-icon="mdi-email-outline"
@@ -46,7 +52,7 @@ const onHandleRegister = () => {
             <v-text-field
               v-model="password"
               label="Senha"
-              hide-details
+              :rules="requiredRule"
               required
               density="compact"
               :append-inner-icon="isPasswordVisible ? 'mdi-eye-off' : 'mdi-eye'"
