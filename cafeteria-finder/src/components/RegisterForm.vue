@@ -11,9 +11,47 @@ const confirmEmail = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 
+const nameRules = ref([
+  (value: string) => !!value || 'O nome de usuário é obrigatório.',
+  (value: string) =>
+    (!!value && value.length > 3) || 'O nome de usuário precisa possuir mais de 3 letras.',
+  (value: string) =>
+    (!!value && value.length <= 10) || 'O nome de usuário precisa possuir menos de 10 letras.'
+])
+const emailRules = ref([
+  (value: string) => !!value || 'O e-mail do usuário é obrigatório.',
+  (value: string) => (!!value && value.includes('@')) || 'O e-mail de usuário não é válido.'
+])
+const confirmEmailRules = ref([
+  (value: string) => !!value || 'Por favor, confirme o seu e-mail.',
+  (value: string) =>
+    (!!value && value === email.value) || 'O e-mail não é idêntico ao informado anteriormente.'
+])
+const passwordRules = ref([
+  (value: string) => !!value || 'A senha é obrigatória.',
+  (value: string) =>
+    (!!value && value.length >= 6) || 'A senha precisa possuir mais de 6 carácteres.',
+  (value: string) =>
+    (!!value && value.length >= 6 ? /\d/.test(value) : true) ||
+    'A senha precisa possuir pelo menos um número.',
+  (value: string) =>
+    (!!value && value.length >= 6
+      ? /[`!@#$%^&*()_+\-=\\[\]{};':"\\|,.<>\\/?~]/.test(value)
+      : true) || 'A senha precisa possuir pelo menos um carácter especial.'
+])
+const confirmPasswordRules = ref([
+  (value: string) => !!value || 'Por favor, confirme a sua senha.',
+  (value: string) =>
+    (!!value && value === password.value) || 'A senha não é idêntica à informada anteriormente.'
+])
+
 const isPasswordVisible = ref(false)
 
-const handleOnSubmit = () => {
+const handleOnSubmit = async () => {
+  const { valid } = await form.value.validate()
+  if (!valid) {
+    return
+  }
   emits('onSubmit', { name: toValue(name), email: toValue(email), password: toValue(password) })
 }
 
@@ -36,7 +74,7 @@ const handleOnCancel = () => {
             <v-text-field
               v-model="name"
               label="Usuário"
-              hide-details
+              :rules="nameRules"
               required
               density="compact"
               variant="outlined"
@@ -48,7 +86,7 @@ const handleOnCancel = () => {
             <v-text-field
               v-model="email"
               label="E-Mail"
-              hide-details
+              :rules="emailRules"
               required
               density="compact"
               variant="outlined"
@@ -60,7 +98,7 @@ const handleOnCancel = () => {
             <v-text-field
               v-model="confirmEmail"
               label="Confirmar E-Mail"
-              hide-details
+              :rules="confirmEmailRules"
               required
               density="compact"
               variant="outlined"
@@ -72,7 +110,7 @@ const handleOnCancel = () => {
             <v-text-field
               v-model="password"
               label="Senha"
-              hide-details
+              :rules="passwordRules"
               required
               :append-inner-icon="isPasswordVisible ? 'mdi-eye-off' : 'mdi-eye'"
               :type="isPasswordVisible ? 'text' : 'password'"
@@ -87,7 +125,7 @@ const handleOnCancel = () => {
             <v-text-field
               v-model="confirmPassword"
               label="Confirmar Senha"
-              hide-details
+              :rules="confirmPasswordRules"
               required
               :append-inner-icon="isPasswordVisible ? 'mdi-eye-off' : 'mdi-eye'"
               :type="isPasswordVisible ? 'text' : 'password'"
