@@ -232,4 +232,10 @@ onBeforeUnmount(() => {
   min-height: 80vh;
   border-radius: 4px;
 }
+
+@media (min-width: 960px) {
+  .map-container {
+    min-height: 75vh;
+  }
+}
 </style>
