@@ -1,8 +1,20 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
 const emits = defineEmits(['onDeleteUser', 'onLogout'])
 
+const isShowingConfirmationModal = ref(false)
+
 const handleOnDeleteUser = () => {
+  isShowingConfirmationModal.value = true
+}
+
+const handleOnConfirmDeleteUser = () => {
   emits('onDeleteUser')
+}
+
+const handleOnCancelDeleteUser = () => {
+  isShowingConfirmationModal.value = !isShowingConfirmationModal.value
 }
 
 const handleOnLogout = () => {
@@ -45,5 +57,15 @@ const handleOnLogout = () => {
         </v-card>
       </v-col>
     </v-row>
+    <v-dialog v-model="isShowingConfirmationModal">
+      <v-card>
+        <v-card-title class="text-h5" style="color: #f08080">Confirmação</v-card-title>
+        <v-card-text> Você realmente deseja excluir a sua conta? </v-card-text>
+        <v-card-actions>
+          <v-btn color="#f4978e" variant="tonal" @click="handleOnConfirmDeleteUser">Sim</v-btn>
+          <v-btn color="#f8ad9d" variant="tonal" @click="handleOnCancelDeleteUser">Não</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
