@@ -163,17 +163,7 @@ function createMap() {
 }
 
 const generateRoute = async (event: any) => {
-  const mockResponse = await fetch(
-    `https://api.mapbox.com/directions/v5/mapbox/walking/${-49.06967512599098},${-26.91337301328545};${
-      event.lngLat.lng
-    },${
-      event.lngLat.lat
-    }?steps=true&geometries=geojson&access_token=pk.eyJ1IjoiYWdlbmNlc3R1ZGlvbWV0YSIsImEiOiJjanh5ZW81aHEwOHV3M2lwZzhhNW1vdXl5In0.3hbV2QKVzZWf511JK9xCug`
-  )
-
-  let route: any = {}
-
-  await mockResponse.json().then((routeData) => (route = routeData))
+  const route = await mapStore.calculateRoute([-49.06967512599098, -26.91337301328545], event)
 
   // Adiciona a fonte de dados com a geometria referente à melhor rota até a cafeteria.
   map.addSource('route', {
