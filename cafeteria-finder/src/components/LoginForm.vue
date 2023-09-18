@@ -8,7 +8,7 @@ const form = ref()
 const name = ref('')
 const password = ref('')
 
-const requiredRule = [(value: string) => !!value || 'Esse campo é obrigatório!']
+const requiredRule = ref([(value: string) => !!value || 'Esse campo é obrigatório!'])
 
 const isPasswordVisible = ref(false)
 
