@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useMapStore } from '@/stores/map'
+import { useRatingStore } from '@/stores/rating'
 import type { CoffeeShop } from '@/types'
 import { toValue, watchDeep } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
@@ -16,12 +17,20 @@ const emits = defineEmits(['onModelChange', 'onFavorite', 'onChangeRating'])
 const mapStore = useMapStore()
 const { isCalculatingRoute } = storeToRefs(mapStore)
 
+const ratingStore = useRatingStore()
+const { isLoadingRating } = storeToRefs(ratingStore)
+
 const currentIsOpen = ref(isOpen)
 const currentRating = ref(initialRating)
-const currentIsLoading = ref(isCalculatingRoute)
+const currentIsLoadingRoute = ref(isCalculatingRoute)
+const currentIsLoadingRating = ref(isLoadingRating)
 
 watchDeep(isCalculatingRoute, () => {
-  currentIsLoading.value = !!toValue(isCalculatingRoute)
+  currentIsLoadingRoute.value = !!toValue(isCalculatingRoute)
+})
+
+watchDeep(isLoadingRating, () => {
+  currentIsLoadingRating.value = !!toValue(isLoadingRating)
 })
 
 const onHandleModelChange = (newModel: boolean) => {
@@ -44,7 +53,7 @@ const onHandleChangeRating = (newRating: number | string) => {
     @update:model-value="onHandleModelChange"
   >
     <v-container>
-      <v-container v-if="currentIsLoading">
+      <v-container v-if="currentIsLoadingRoute || currentIsLoadingRating">
         <v-row no-gutters>
           <v-col cols="12" style="display: flex; justify-content: center; align-items: center">
             <v-progress-circular :size="100" color="#f08080" indeterminate />

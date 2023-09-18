@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { useMapStore } from '@/stores/map'
-import { useFavoritesStore } from '@/stores/favorites'
-import MapboxMap from '@/components/MapboxMap.vue'
 import CoffeeShopDetails from '@/components/CoffeeShopDetails.vue'
-import { storeToRefs } from 'pinia'
+import MapboxMap from '@/components/MapboxMap.vue'
+import { useFavoritesStore } from '@/stores/favorites'
+import { useMapStore } from '@/stores/map'
+import { useRatingStore } from '@/stores/rating'
 import { toValue, watchDeep } from '@vueuse/core'
+import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 
 const mapStore = useMapStore()
 const favoritesStore = useFavoritesStore()
+const ratingStore = useRatingStore()
 
 const { selectedCoffeeShop } = storeToRefs(mapStore)
 
@@ -17,8 +19,22 @@ const isShowingFavoriteAlert = ref(false)
 
 const coffeeShopRating = ref(0)
 
-watchDeep(selectedCoffeeShop, () => {
-  isShowingCoffeeShopDetails.value = !!toValue(selectedCoffeeShop)
+watchDeep(selectedCoffeeShop, async () => {
+  if (toValue(selectedCoffeeShop)) {
+    const currentCoffeeShopRating = await ratingStore.loadCoffeeShopRating(
+      selectedCoffeeShop.value!.id
+    )
+    coffeeShopRating.value = currentCoffeeShopRating?.rating ?? 0
+  }
+  // Reseta o estado para que o componente de detalhes seja destruído do documento HTML.
+  isShowingCoffeeShopDetails.value = false
+
+  // Um "timeout" de 0 segundos apenas joga a execução para o fim da fila,
+  // desta forma temos o componente destruído por alguns milissegundos
+  // e então ao surgir novamente, será instanciado com os valores atualizados.
+  setTimeout(() => {
+    isShowingCoffeeShopDetails.value = !!toValue(selectedCoffeeShop)
+  }, 0)
 })
 
 const onModelChange = (hasChanged: boolean) => {
@@ -29,7 +45,7 @@ const onModelChange = (hasChanged: boolean) => {
 }
 
 const onChangeRating = async (newRating: number | string) => {
-  await mapStore.updateCoffeeShopRating(toValue(selectedCoffeeShop)!.id, Number(newRating))
+  await ratingStore.updateCoffeeShopRating(toValue(selectedCoffeeShop)!.id, Number(newRating))
 }
 
 const onFavorite = () => {
