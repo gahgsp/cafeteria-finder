@@ -68,10 +68,22 @@ const onHandleRegister = () => {
             cols="12"
             style="display: flex; justify-content: space-around; align-items: center"
           >
-            <v-btn variant="tonal" @click="onHandleLogin" size="large" style="color: #f4978e">
+            <v-btn
+              variant="tonal"
+              @click="onHandleLogin"
+              size="large"
+              style="color: #f4978e"
+              data-testid="login-button"
+            >
               Entrar
             </v-btn>
-            <v-btn variant="tonal" size="large" @click="onHandleRegister" style="color: #f8ad9d">
+            <v-btn
+              variant="tonal"
+              size="large"
+              @click="onHandleRegister"
+              style="color: #f8ad9d"
+              data-testid="register-button"
+            >
               Registrar
             </v-btn>
           </v-col>
