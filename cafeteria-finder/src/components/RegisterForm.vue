@@ -61,7 +61,7 @@ const handleOnCancel = () => {
 </script>
 
 <template>
-  <v-form ref="form" @submit.prevent>
+  <v-form ref="form" @submit.prevent="handleOnSubmit">
     <v-container style="display: flex; justify-content: center; align-items: center">
       <v-col cols="12">
         <v-row>
@@ -140,16 +140,16 @@ const handleOnCancel = () => {
             cols="12"
             style="display: flex; justify-content: space-around; align-items: center"
           >
-            <v-btn
-              variant="tonal"
-              type="submit"
-              @click="handleOnSubmit"
-              size="large"
-              style="color: #f4978e"
-            >
+            <v-btn type="submit" variant="tonal" size="large" style="color: #f4978e">
               Registrar
             </v-btn>
-            <v-btn variant="tonal" size="large" style="color: #f8ad9d" @click="handleOnCancel">
+            <v-btn
+              variant="tonal"
+              size="large"
+              style="color: #f8ad9d"
+              @click="handleOnCancel"
+              data-testid="cancel-button"
+            >
               Cancelar
             </v-btn>
           </v-col>
