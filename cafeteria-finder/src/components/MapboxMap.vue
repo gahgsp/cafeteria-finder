@@ -143,6 +143,13 @@ function createMap() {
     )
   })
 
+  map.on('click', (e: any) => {
+    if (!e.features) {
+      mapStore.setSelectedCoffeeShop(null)
+      return
+    }
+  })
+
   map.on('click', 'unclustered-point', async (e: any) => {
     if (!e.features) {
       mapStore.setSelectedCoffeeShop(null)
