@@ -25,6 +25,7 @@ const handleOnClickSettings = () => {
       @click="handleOnClickFinder"
       :disabled="currentPath == '/finder'"
       style="color: #f4978e"
+      data-testid="finder-button"
     >
       <v-icon>mdi-map-marker</v-icon>
       <span>Pesquisar</span>
@@ -34,6 +35,7 @@ const handleOnClickSettings = () => {
       @click="handleOnClickFavorites"
       :disabled="currentPath == '/favorites'"
       style="color: #f4978e"
+      data-testid="favorites-button"
     >
       <v-icon>mdi-heart</v-icon>
       <span>Favoritos</span>
@@ -43,6 +45,7 @@ const handleOnClickSettings = () => {
       @click="handleOnClickSettings"
       :disabled="currentPath == '/settings'"
       style="color: #f4978e"
+      data-testid="settings-button"
     >
       <v-icon>mdi-cog</v-icon>
       <span>Configuraçōes</span>
