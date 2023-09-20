@@ -33,7 +33,7 @@ const handleOnLogout = () => {
           </v-col>
           <v-col cols="12" style="padding-top: 0">
             <v-list density="compact">
-              <v-list-item link @click="handleOnDeleteUser">
+              <v-list-item link @click="handleOnDeleteUser" data-testid="delete-user-item">
                 <v-list-item-title class="text-body-1">Excluir Conta</v-list-item-title>
                 <template v-slot:append>
                   <v-avatar color="#FFDAB9">
@@ -42,7 +42,7 @@ const handleOnLogout = () => {
                 </template>
               </v-list-item>
               <v-divider />
-              <v-list-item link @click="handleOnLogout">
+              <v-list-item link @click="handleOnLogout" data-testid="logout-item">
                 <v-list-item-title class="text-body-1 font-weight-bold"
                   >Encerrar Sessão</v-list-item-title
                 >
@@ -62,8 +62,20 @@ const handleOnLogout = () => {
         <v-card-title class="text-h5" style="color: #f08080">Confirmação</v-card-title>
         <v-card-text> Você realmente deseja excluir a sua conta? </v-card-text>
         <v-card-actions>
-          <v-btn color="#f4978e" variant="tonal" @click="handleOnConfirmDeleteUser">Sim</v-btn>
-          <v-btn color="#f8ad9d" variant="tonal" @click="handleOnCancelDeleteUser">Não</v-btn>
+          <v-btn
+            color="#f4978e"
+            variant="tonal"
+            @click="handleOnConfirmDeleteUser"
+            data-testid="confirm-delete-user-button"
+            >Sim</v-btn
+          >
+          <v-btn
+            color="#f8ad9d"
+            variant="tonal"
+            @click="handleOnCancelDeleteUser"
+            data-testid="cancel-delete-user-button"
+            >Não</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
