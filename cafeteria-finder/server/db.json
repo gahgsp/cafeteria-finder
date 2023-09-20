@@ -11,7 +11,33 @@
             "color": "#F08080",
             "address": "Rua da Batatinha, 123, 99999-99, Blumenau",
             "phone": "(47) 3332-3332",
-            "shift": "08:00 - 18:00"
+            "shift": "08:00 - 18:00",
+            "sales": [
+              { 
+                "id": "1",
+                "title": "Oferta 1",
+                "price": "10",
+                "image": null
+              },
+              { 
+                "id": "2",
+                "title": "Oferta 2",
+                "price": "20",
+                "image": null
+              },
+              { 
+                "id": "3",
+                "title": "Oferta 3",
+                "price": "30",
+                "image": null
+              },
+              { 
+                "id": "4",
+                "title": "Oferta 4",
+                "price": "40",
+                "image": null
+              }
+            ]
           },
           "geometry": {
             "coordinates": [
@@ -29,7 +55,33 @@
             "color": "#F08080",
             "address": "Rua da Batatinha, 123, 99999-99, Blumenau",
             "phone": "(47) 3332-3332",
-            "shift": "08:00 - 18:00"
+            "shift": "08:00 - 18:00",
+            "sales": [
+              { 
+                "id": "1",
+                "title": "Oferta 1",
+                "price": "10",
+                "image": null
+              },
+              { 
+                "id": "2",
+                "title": "Oferta 2",
+                "price": "20",
+                "image": null
+              },
+              { 
+                "id": "3",
+                "title": "Oferta 3",
+                "price": "30",
+                "image": null
+              },
+              { 
+                "id": "4",
+                "title": "Oferta 4",
+                "price": "40",
+                "image": null
+              }
+            ]
           },
           "geometry": {
             "coordinates": [
@@ -47,7 +99,33 @@
             "color": "#F08080",
             "address": "Rua da Batatinha, 123, 99999-99, Blumenau",
             "phone": "(47) 3332-3332",
-            "shift": "08:00 - 18:00"
+            "shift": "08:00 - 18:00",
+            "sales": [
+              { 
+                "id": "1",
+                "title": "Oferta 1",
+                "price": "10",
+                "image": null
+              },
+              { 
+                "id": "2",
+                "title": "Oferta 2",
+                "price": "20",
+                "image": null
+              },
+              { 
+                "id": "3",
+                "title": "Oferta 3",
+                "price": "30",
+                "image": null
+              },
+              { 
+                "id": "4",
+                "title": "Oferta 4",
+                "price": "40",
+                "image": null
+              }
+            ]
           },
           "geometry": {
             "coordinates": [

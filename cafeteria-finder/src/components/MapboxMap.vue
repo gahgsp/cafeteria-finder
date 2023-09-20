@@ -163,7 +163,9 @@ function createMap() {
       map.removeSource('route')
     }
 
-    mapStore.setSelectedCoffeeShop(e.features[0])
+    const newSelectedCoffeeShop = e.features[0]
+    newSelectedCoffeeShop.properties.sales = JSON.parse(newSelectedCoffeeShop.properties.sales)
+    mapStore.setSelectedCoffeeShop(newSelectedCoffeeShop)
 
     generateRoute(e)
   })
@@ -207,8 +209,8 @@ const generateRoute = async (event: any) => {
 }
 
 onMounted(async () => {
-  const { data } = await mapStore.loadCoffeeShops()
-  coffeeShops.value = toValue(data)[0]
+  const response = await mapStore.loadCoffeeShops()
+  coffeeShops.value = toValue(response)[0]
   createMap()
   if (toValue(watchableSelectedCoffeeShop)) {
     generateRoute({

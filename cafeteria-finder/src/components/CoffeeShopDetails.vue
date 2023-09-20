@@ -121,86 +121,21 @@ const onHandleChangeRating = (newRating: number | string) => {
           </v-col>
           <v-col cols="12">
             <v-slide-group>
-              <v-slide-group-item>
+              <v-slide-group-item
+                v-for="sale in selectedCoffeeShop?.properties.sales"
+                :key="sale.id"
+              >
                 <v-card width="100" height="200" class="ma-4">
                   <v-row align="center">
                     <v-col class="shrink">
-                      <v-img src="//placehold.it/100x120" max-width="100"></v-img>
+                      <v-img :src="sale.image ?? 'http://placehold.it/100x120'" max-width="100" />
                     </v-col>
                     <v-col class="pt-0" align="center">
-                      <v-card-title class="pb-0 pt-0 text-body-1" style="color: #f08080"
-                        >Oferta 1</v-card-title
-                      >
+                      <v-card-title class="pb-0 pt-0 text-body-1" style="color: #f08080">{{
+                        sale.title
+                      }}</v-card-title>
                       <v-card-subtitle class="text-body-2" style="color: #f4978e"
-                        >R$ 10</v-card-subtitle
-                      >
-                    </v-col>
-                  </v-row>
-                </v-card>
-              </v-slide-group-item>
-              <v-slide-group-item>
-                <v-card width="100" height="200" class="ma-4">
-                  <v-row align="center">
-                    <v-col class="shrink">
-                      <v-img src="//placehold.it/100x120" max-width="100"></v-img>
-                    </v-col>
-                    <v-col class="pt-0" align="center">
-                      <v-card-title class="pb-0 pt-0 text-body-1" style="color: #f08080"
-                        >Oferta 2</v-card-title
-                      >
-                      <v-card-subtitle class="text-body-2" style="color: #f4978e"
-                        >R$ 10</v-card-subtitle
-                      >
-                    </v-col>
-                  </v-row>
-                </v-card>
-              </v-slide-group-item>
-              <v-slide-group-item>
-                <v-card width="100" height="200" class="ma-4">
-                  <v-row align="center">
-                    <v-col class="shrink">
-                      <v-img src="//placehold.it/100x120" max-width="100"></v-img>
-                    </v-col>
-                    <v-col class="pt-0" align="center">
-                      <v-card-title class="pb-0 pt-0 text-body-1" style="color: #f08080"
-                        >Oferta 3</v-card-title
-                      >
-                      <v-card-subtitle class="text-body-2" style="color: #f4978e"
-                        >R$ 10</v-card-subtitle
-                      >
-                    </v-col>
-                  </v-row>
-                </v-card>
-              </v-slide-group-item>
-              <v-slide-group-item>
-                <v-card width="100" height="200" class="ma-4">
-                  <v-row align="center">
-                    <v-col class="shrink">
-                      <v-img src="//placehold.it/100x120" max-width="100"></v-img>
-                    </v-col>
-                    <v-col class="pt-0" align="center">
-                      <v-card-title class="pb-0 pt-0 text-body-1" style="color: #f08080"
-                        >Oferta 4</v-card-title
-                      >
-                      <v-card-subtitle class="text-body-2" style="color: #f4978e"
-                        >R$ 10</v-card-subtitle
-                      >
-                    </v-col>
-                  </v-row>
-                </v-card>
-              </v-slide-group-item>
-              <v-slide-group-item>
-                <v-card width="100" height="200" class="ma-4">
-                  <v-row align="center">
-                    <v-col class="shrink">
-                      <v-img src="//placehold.it/100x120" max-width="100"></v-img>
-                    </v-col>
-                    <v-col class="pt-0" align="center">
-                      <v-card-title class="pb-0 pt-0 text-body-1" style="color: #f08080"
-                        >Oferta 5</v-card-title
-                      >
-                      <v-card-subtitle class="text-body-2" style="color: #f4978e"
-                        >R$ 10</v-card-subtitle
+                        >R$ {{ sale.price }}</v-card-subtitle
                       >
                     </v-col>
                   </v-row>

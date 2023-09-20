@@ -10,7 +10,7 @@ export const useMapStore = defineStore('map', () => {
 
   async function loadCoffeeShops() {
     const response = await useCustomFetch<CoffeeShop>('http://localhost:3001/cafes').get().json()
-    return response
+    return response.data.value
   }
 
   async function loadSpecificCoffeeShops(
