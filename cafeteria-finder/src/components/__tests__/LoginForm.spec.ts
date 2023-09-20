@@ -14,9 +14,9 @@ describe('LoginForm', () => {
   it('emits "onLogin" event when the "Entrar" button is clicked', async () => {
     const wrapper = mount(LoginForm)
     const form = wrapper.vm.$refs.form as VForm
-    form.validate = vi.fn().mockReturnValue(true)
+    form.validate = vi.fn().mockReturnValue({ valid: true })
 
-    await wrapper.find('[data-testid="login-button"]').trigger('click')
+    await wrapper.find('v-form').trigger('submit.prevent')
 
     expect(wrapper.emitted().onLogin).toBeTruthy()
   })

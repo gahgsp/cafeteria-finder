@@ -26,7 +26,7 @@ const onHandleRegister = () => {
 </script>
 
 <template>
-  <v-form ref="form" @submit.prevent>
+  <v-form ref="form" @submit.prevent="onHandleLogin">
     <v-container style="display: flex; justify-content: center; align-items: center">
       <v-col cols="12">
         <v-row>
@@ -69,8 +69,8 @@ const onHandleRegister = () => {
             style="display: flex; justify-content: space-around; align-items: center"
           >
             <v-btn
+              type="submit"
               variant="tonal"
-              @click="onHandleLogin"
               size="large"
               style="color: #f4978e"
               data-testid="login-button"
