@@ -2,7 +2,6 @@
 import { useMapStore } from '@/stores/map'
 import { useRatingStore } from '@/stores/rating'
 import type { CoffeeShop } from '@/types'
-import { toValue, watchDeep } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { ref, watch } from 'vue'
 
