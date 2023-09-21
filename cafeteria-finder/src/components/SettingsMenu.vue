@@ -28,12 +28,17 @@ const handleOnLogout = () => {
       <v-col cols="12">
         <v-card>
           <v-col cols="12" style="padding-bottom: 0">
-            <div><span class="text-h5" style="color: #f08080">Configurações</span></div>
-            <v-divider style="margin-top: 12px; margin-bottom: 12px" />
+            <div><span class="text-h5 primary">Configurações</span></div>
+            <v-divider class="divider" />
           </v-col>
           <v-col cols="12" style="padding-top: 0">
             <v-list density="compact">
-              <v-list-item link @click="handleOnDeleteUser" data-testid="delete-user-item">
+              <v-list-item
+                link
+                @click="handleOnDeleteUser"
+                aria-label="Excluir Conta"
+                data-testid="delete-user-item"
+              >
                 <v-list-item-title class="text-body-1">Excluir Conta</v-list-item-title>
                 <template v-slot:append>
                   <v-avatar color="#FFDAB9">
@@ -42,12 +47,17 @@ const handleOnLogout = () => {
                 </template>
               </v-list-item>
               <v-divider />
-              <v-list-item link @click="handleOnLogout" data-testid="logout-item">
+              <v-list-item
+                link
+                @click="handleOnLogout"
+                aria-label="Encerrar Sessão"
+                data-testid="logout-item"
+              >
                 <v-list-item-title class="text-body-1 font-weight-bold"
                   >Encerrar Sessão</v-list-item-title
                 >
                 <template v-slot:append>
-                  <v-avatar color="#F08080">
+                  <v-avatar class="primary">
                     <v-icon color="white">mdi-logout</v-icon>
                   </v-avatar>
                 </template>
@@ -59,7 +69,7 @@ const handleOnLogout = () => {
     </v-row>
     <v-dialog v-model="isShowingConfirmationModal">
       <v-card>
-        <v-card-title class="text-h5" style="color: #f08080">Confirmação</v-card-title>
+        <v-card-title class="text-h5 primary">Confirmação</v-card-title>
         <v-card-text> Você realmente deseja excluir a sua conta? </v-card-text>
         <v-card-actions>
           <v-btn
@@ -81,3 +91,14 @@ const handleOnLogout = () => {
     </v-dialog>
   </v-container>
 </template>
+
+<style scoped>
+.primary {
+  color: #f08080;
+}
+
+.divider {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+</style>
