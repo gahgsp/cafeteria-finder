@@ -4,7 +4,7 @@ import { useRatingStore } from '@/stores/rating'
 import type { CoffeeShop } from '@/types'
 import { toValue, watchDeep } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const { isOpen, selectedCoffeeShop, initialRating } = defineProps<{
   isOpen: boolean
@@ -25,12 +25,12 @@ const currentRating = ref(initialRating)
 const currentIsLoadingRoute = ref(isCalculatingRoute)
 const currentIsLoadingRating = ref(isLoadingRating)
 
-watchDeep(isCalculatingRoute, () => {
-  currentIsLoadingRoute.value = !!toValue(isCalculatingRoute)
+watch(isCalculatingRoute, (newValue) => {
+  currentIsLoadingRoute.value = newValue
 })
 
-watchDeep(isLoadingRating, () => {
-  currentIsLoadingRating.value = !!toValue(isLoadingRating)
+watch(isLoadingRating, (newValue) => {
+  currentIsLoadingRating.value = newValue
 })
 
 const onHandleModelChange = (newModel: boolean) => {
@@ -55,27 +55,20 @@ const onHandleChangeRating = (newRating: number | string) => {
     <v-container>
       <v-container v-if="currentIsLoadingRoute || currentIsLoadingRating">
         <v-row no-gutters>
-          <v-col cols="12" style="display: flex; justify-content: center; align-items: center">
-            <v-progress-circular :size="100" color="#f08080" indeterminate />
+          <v-col cols="12" class="center-container">
+            <v-progress-circular :size="100" indeterminate class="primary" />
           </v-col>
         </v-row>
       </v-container>
       <v-container v-else>
         <v-row no-gutters>
           <v-col cols="11">
-            <span class="text-h5" style="color: #f08080">{{
-              selectedCoffeeShop?.properties.name
-            }}</span>
+            <span class="text-h5 primary">{{ selectedCoffeeShop?.properties.name }}</span>
           </v-col>
           <v-col cols="1">
-            <v-btn
-              density="compact"
-              icon="mdi-heart"
-              @click="onHandleFavorite"
-              style="color: #f4978e"
-            />
+            <v-btn density="compact" icon="mdi-heart" @click="onHandleFavorite" class="secondary" />
           </v-col>
-          <v-col cols="12" style="display: flex; align-items: center">
+          <v-col cols="12" class="timer-container">
             <v-icon color="#FFDAB9">mdi-clock</v-icon>
             <span class="text-body-1 font-weight-bold ml-1">
               {{ Math.round(selectedCoffeeShop?.timeToArrive! / 60) }}
@@ -83,7 +76,7 @@ const onHandleChangeRating = (newRating: number | string) => {
             >
           </v-col>
         </v-row>
-        <v-row no-gutters style="padding-top: 12px; padding-bottom: 12px">
+        <v-row no-gutters class="divider-container">
           <v-col cols="12">
             <v-divider />
           </v-col>
@@ -91,33 +84,31 @@ const onHandleChangeRating = (newRating: number | string) => {
         <v-row no-gutters>
           <v-col cols="12">
             <span class="text-caption">Endereço:&nbsp;</span>
-            <span class="text-caption font-weight-bold" style="color: #f08080">{{
+            <span class="text-caption font-weight-bold primary">{{
               selectedCoffeeShop?.properties.address
             }}</span>
           </v-col>
           <v-col cols="12">
             <span class="text-caption">Telefone:&nbsp;</span>
-            <span class="text-caption font-weight-bold" style="color: #f08080">{{
+            <span class="text-caption font-weight-bold primary">{{
               selectedCoffeeShop?.properties.phone
             }}</span>
           </v-col>
           <v-col cols="12">
             <span class="text-caption">Horário:&nbsp;</span>
-            <span class="text-caption font-weight-bold" style="color: #f08080">{{
+            <span class="text-caption font-weight-bold primary">{{
               selectedCoffeeShop?.properties.shift
             }}</span>
           </v-col>
         </v-row>
-        <v-row no-gutters style="padding-top: 12px; padding-bottom: 12px">
+        <v-row no-gutters class="divider-container">
           <v-col cols="12">
             <v-divider />
           </v-col>
         </v-row>
         <v-row no-gutters>
           <v-col cols="12">
-            <span class="text-subtitle-1 font-weight-bold" style="color: #f08080"
-              >Ofertas Especiais</span
-            >
+            <span class="text-subtitle-1 font-weight-bold primary">Ofertas Especiais</span>
           </v-col>
           <v-col cols="12">
             <v-slide-group>
@@ -131,10 +122,10 @@ const onHandleChangeRating = (newRating: number | string) => {
                       <v-img :src="sale.image ?? 'http://placehold.it/100x120'" max-width="100" />
                     </v-col>
                     <v-col class="pt-0" align="center">
-                      <v-card-title class="pb-0 pt-0 text-body-1" style="color: #f08080">{{
+                      <v-card-title class="pb-0 pt-0 text-body-1 primary">{{
                         sale.title
                       }}</v-card-title>
-                      <v-card-subtitle class="text-body-2" style="color: #f4978e"
+                      <v-card-subtitle class="text-body-2 secondary"
                         >R$ {{ sale.price }}</v-card-subtitle
                       >
                     </v-col>
@@ -144,21 +135,21 @@ const onHandleChangeRating = (newRating: number | string) => {
             </v-slide-group>
           </v-col>
         </v-row>
-        <v-row no-gutters style="padding-top: 12px; padding-bottom: 12px">
+        <v-row no-gutters class="divider-container">
           <v-col cols="12">
             <v-divider />
           </v-col>
         </v-row>
         <v-row no-gutters>
           <v-col cols="12">
-            <span class="text-subtitle-1 font-weight-bold" style="color: #f08080">Avaliações</span>
+            <span class="text-subtitle-1 font-weight-bold primary">Avaliações</span>
           </v-col>
           <v-col cols="12">
             <v-rating
               v-model="currentRating"
               @update:model-value="onHandleChangeRating"
               density="comfortable"
-              color="#F4978E"
+              class="secondary"
             />
           </v-col>
         </v-row>
@@ -168,6 +159,29 @@ const onHandleChangeRating = (newRating: number | string) => {
 </template>
 
 <style scoped>
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timer-container {
+  display: flex;
+  align-items: center;
+}
+
+.divider-container {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.primary {
+  color: #f08080;
+}
+
+.secondary {
+  color: #f4978e;
+}
 .v-navigation-drawer__scrim {
   display: none;
 }
