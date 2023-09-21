@@ -27,11 +27,11 @@ const onHandleRegister = () => {
 
 <template>
   <v-form ref="form" @submit.prevent="onHandleLogin">
-    <v-container style="display: flex; justify-content: center; align-items: center">
+    <v-container class="main-container">
       <v-col cols="12">
         <v-row>
           <v-col cols="12" md="12">
-            <span class="text-h2" style="color: #f08080">Login</span>
+            <span class="text-h2 primary">Login</span>
           </v-col>
         </v-row>
         <v-row>
@@ -44,7 +44,8 @@ const onHandleRegister = () => {
               density="compact"
               prepend-inner-icon="mdi-email-outline"
               variant="outlined"
-            ></v-text-field>
+              aria-label="Usuário"
+            />
           </v-col>
         </v-row>
         <v-row>
@@ -60,20 +61,19 @@ const onHandleRegister = () => {
               prepend-inner-icon="mdi-lock-outline"
               variant="outlined"
               @click:append-inner="isPasswordVisible = !isPasswordVisible"
-            ></v-text-field>
+              aria-label="Senha"
+            />
           </v-col>
         </v-row>
         <v-row>
-          <v-col
-            cols="12"
-            style="display: flex; justify-content: space-around; align-items: center"
-          >
+          <v-col cols="12" class="actions-container">
             <v-btn
               type="submit"
               variant="tonal"
               size="large"
-              style="color: #f4978e"
+              class="secondary"
               data-testid="login-button"
+              aria-label="Entrar"
             >
               Entrar
             </v-btn>
@@ -81,8 +81,9 @@ const onHandleRegister = () => {
               variant="tonal"
               size="large"
               @click="onHandleRegister"
-              style="color: #f8ad9d"
+              class="terciary"
               data-testid="register-button"
+              aria-label="Registrar"
             >
               Registrar
             </v-btn>
@@ -92,3 +93,29 @@ const onHandleRegister = () => {
     </v-container>
   </v-form>
 </template>
+
+<style scoped>
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.primary {
+  color: #f08080;
+}
+
+.secondary {
+  color: #f4978e;
+}
+
+.terciary {
+  color: #f8ad9d;
+}
+
+.actions-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+</style>
