@@ -3,7 +3,17 @@ const { name } = defineProps<{ name: string }>()
 </script>
 
 <template>
-  <v-toolbar style="background-color: #f4978e">
-    <v-toolbar-title style="color: #fff">Bem vindo, {{ name }}!</v-toolbar-title>
+  <v-toolbar class="secondary-background">
+    <v-toolbar-title class="title">Bem vindo, {{ name }}!</v-toolbar-title>
   </v-toolbar>
 </template>
+
+<style scoped>
+.secondary-background {
+  background-color: #f4978e;
+}
+
+.title {
+  color: #fff;
+}
+</style>
