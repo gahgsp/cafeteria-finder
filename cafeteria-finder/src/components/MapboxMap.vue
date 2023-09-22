@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, ref } from 'vue'
-import mapboxgl from 'mapbox-gl'
+import { createRGBPoint } from '@/composables/map'
+import { useMapStore } from '@/stores/map'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '@mapbox/mapbox-gl-geocoder/lib/mapbox-gl-geocoder.css'
-import 'mapbox-gl/dist/mapbox-gl.css'
-import { useMapStore } from '@/stores/map'
 import { toValue, watchDeep } from '@vueuse/core'
+import mapboxgl from 'mapbox-gl'
+import 'mapbox-gl/dist/mapbox-gl.css'
 import { storeToRefs } from 'pinia'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 // TODO: Remover o comentário e usar a API sem mock para a versão final.
 // const geolocation = useGeolocation()
@@ -29,31 +30,7 @@ watchDeep(watchableSelectedCoffeeShop, (obj) => {
   }
 })
 
-function createRGBPoint({ r, g, b }: { r: number; g: number; b: number }) {
-  const diameter = 50
-  const radius = diameter / 2
-  const centerX = radius
-  const centerY = radius
-  const pixelData = new Uint8Array(diameter * diameter * 4) // Cada pixel tem um componente RGBA.
-
-  for (let y = 0; y < diameter; y++) {
-    for (let x = 0; x < diameter; x++) {
-      const distance = Math.sqrt((x - centerX) ** 2 + (y - centerY) ** 2)
-
-      if (distance <= radius) {
-        const index = (y * diameter + x) * 4
-        pixelData[index] = r // Vermelho
-        pixelData[index + 1] = g // Verde
-        pixelData[index + 2] = b // Azul
-        pixelData[index + 3] = 255 // Alfa (255 = totalmente opaco)
-      }
-    }
-  }
-
-  return { width: diameter, height: diameter, data: pixelData }
-}
-
-function createMap() {
+const createMap = () => {
   mapboxgl.accessToken =
     'pk.eyJ1IjoiYWdlbmNlc3R1ZGlvbWV0YSIsImEiOiJjanh5ZW81aHEwOHV3M2lwZzhhNW1vdXl5In0.3hbV2QKVzZWf511JK9xCug'
 
