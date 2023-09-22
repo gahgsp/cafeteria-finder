@@ -57,7 +57,7 @@ const handleOnLogout = () => {
                   >Encerrar Sessão</v-list-item-title
                 >
                 <template v-slot:append>
-                  <v-avatar class="primary">
+                  <v-avatar color="#F08080">
                     <v-icon color="white">mdi-logout</v-icon>
                   </v-avatar>
                 </template>
