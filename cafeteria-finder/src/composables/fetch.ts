@@ -1,7 +1,7 @@
 import { createFetch } from '@vueuse/core'
 
 const useCustomFetch = createFetch({
-    baseUrl: "http://localhost:3001",
+  baseUrl: 'https://cafeteria-finder-data.onrender.com'
 })
 
 export default useCustomFetch

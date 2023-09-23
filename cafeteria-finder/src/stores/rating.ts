@@ -8,17 +8,15 @@ export const useRatingStore = defineStore('rating', () => {
   const isLoadingRating = ref(false)
 
   async function updateCoffeeShopRating(coffeeShopId: number, newRating: number) {
-    const { data } = await useCustomFetch<Rating[]>(
-      `http://localhost:3001/ratings?coffeeShopId=${coffeeShopId}`
-    ).json()
+    const { data } = await useCustomFetch<Rating[]>(`/ratings?coffeeShopId=${coffeeShopId}`).json()
     if (toValue(data)!.length > 0) {
-      await useCustomFetch(`http://localhost:3001/ratings`).patch({
+      await useCustomFetch(`/ratings`).patch({
         id: toValue(data)![0].id,
         coffeeShopId,
         rating: newRating
       })
     } else {
-      await useCustomFetch(`http://localhost:3001/ratings`).post({
+      await useCustomFetch(`/ratings`).post({
         coffeeShopId,
         rating: newRating
       })
@@ -27,9 +25,7 @@ export const useRatingStore = defineStore('rating', () => {
 
   async function loadCoffeeShopRating(coffeeShopId: number): Promise<Rating> {
     isLoadingRating.value = true
-    const { data } = await useCustomFetch<Rating>(
-      `http://localhost:3001/ratings?coffeeShopId=${coffeeShopId}`
-    )
+    const { data } = await useCustomFetch<Rating>(`/ratings?coffeeShopId=${coffeeShopId}`)
       .get()
       .json()
     isLoadingRating.value = false

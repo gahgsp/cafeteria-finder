@@ -9,7 +9,7 @@ export const useMapStore = defineStore('map', () => {
   const isCalculatingRoute = ref<boolean>(false)
 
   async function loadCoffeeShops() {
-    const response = await useCustomFetch<CoffeeShop>('http://localhost:3001/cafes').get().json()
+    const response = await useCustomFetch<CoffeeShop>('/cafes').get().json()
     return response.data.value
   }
 
@@ -17,7 +17,7 @@ export const useMapStore = defineStore('map', () => {
     coffeeShopsIds: number[]
   ): Promise<{ coffeeShops: CoffeeShop[]; isError: boolean }> {
     const coffeeShops = ref<CoffeeShop[]>([])
-    const { data, error } = await useCustomFetch('http://localhost:3001/cafes?').get().json()
+    const { data, error } = await useCustomFetch('/cafes?').get().json()
     const retrievedCoffeeShops: CoffeeShop[] = toValue(data)[0].features
 
     coffeeShops.value = retrievedCoffeeShops.filter((retrievedCoffeeShop) => {
