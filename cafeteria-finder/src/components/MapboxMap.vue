@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { createRGBPoint } from '@/composables/map'
 import { useMapStore } from '@/stores/map'
+// @ts-ignore
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '@mapbox/mapbox-gl-geocoder/lib/mapbox-gl-geocoder.css'
 import { toValue, watchDeep } from '@vueuse/core'
+// @ts-ignore
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { storeToRefs } from 'pinia'
