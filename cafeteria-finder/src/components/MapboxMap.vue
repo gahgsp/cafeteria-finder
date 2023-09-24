@@ -4,7 +4,7 @@ import { useMapStore } from '@/stores/map'
 // @ts-ignore
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '@mapbox/mapbox-gl-geocoder/lib/mapbox-gl-geocoder.css'
-import { toValue, watchDeep } from '@vueuse/core'
+import { toValue, useGeolocation, watchDeep } from '@vueuse/core'
 // @ts-ignore
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
@@ -12,7 +12,7 @@ import { storeToRefs } from 'pinia'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 // TODO: Remover o comentário e usar a API sem mock para a versão final.
-// const geolocation = useGeolocation()
+const geolocation = useGeolocation()
 
 const mapStore = useMapStore()
 const { selectedCoffeeShop: watchableSelectedCoffeeShop } = storeToRefs(mapStore)
@@ -151,7 +151,10 @@ const createMap = () => {
 }
 
 const generateRoute = async (event: any) => {
-  const route = await mapStore.calculateRoute([-49.06967512599098, -26.91337301328545], event)
+  const route = await mapStore.calculateRoute(
+    [geolocation.coords.value.longitude, geolocation.coords.value.latitude],
+    event
+  )
 
   // Adiciona a fonte de dados com a geometria referente à melhor rota até a cafeteria.
   map.addSource('route', {
