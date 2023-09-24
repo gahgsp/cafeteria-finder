@@ -13,8 +13,9 @@ async function handleOnLogin(formData: { name: string; password: string }) {
   const { isError } = await store.login({ name: formData.name, password: formData.password })
   if (!isError) {
     router.push('/finder')
+  } else {
+    isErrorAlert.value = true
   }
-  isErrorAlert.value = true
 }
 
 function handleOnRegister() {
