@@ -208,6 +208,7 @@ onBeforeUnmount(() => {
   if (map) {
     map.remove()
   }
+  mapStore.setSelectedCoffeeShop(null)
 })
 </script>
 
