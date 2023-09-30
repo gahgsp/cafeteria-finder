@@ -138,7 +138,7 @@ const createMap = () => {
   })
 
   map.on('click', 'unclustered-point', async (e: any) => {
-    if (!e.features || geolocation.error) {
+    if (!e.features || geolocation.coords.value.longitude === Infinity) {
       mapStore.setSelectedCoffeeShop(null)
       return
     }
