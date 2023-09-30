@@ -11,7 +11,6 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import { storeToRefs } from 'pinia'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 
-// TODO: Remover o comentário e usar a API sem mock para a versão final.
 const geolocation = useGeolocation()
 
 const mapStore = useMapStore()
@@ -39,9 +38,11 @@ const createMap = () => {
   map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v11',
-    center: mapStore.selectedCoffeeShop?.geometry.coordinates || [
-      -49.07277033480926, -26.915345661590365
-    ], // Blumenau
+    center:
+      mapStore.selectedCoffeeShop?.geometry.coordinates ||
+      (geolocation.coords.value.longitude !== Infinity
+        ? [geolocation.coords.value.longitude, geolocation.coords.value.latitude] // Localização do Usuário
+        : [-49.07652828529268, -26.909289754380417]), // Blumenau
     zoom: 15
   })
 
@@ -109,6 +110,12 @@ const createMap = () => {
         'text-halo-blur': 0
       }
     })
+
+    if (geolocation.coords.value.longitude !== Infinity) {
+      new mapboxgl.Marker()
+        .setLngLat([geolocation.coords.value.longitude, geolocation.coords.value.latitude])
+        .addTo(map)
+    }
 
     // Adiciona ao mapa a barra de pesquisa de cidades.
     map.addControl(
