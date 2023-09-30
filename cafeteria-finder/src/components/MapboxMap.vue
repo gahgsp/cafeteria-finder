@@ -17,6 +17,7 @@ const mapStore = useMapStore()
 const { selectedCoffeeShop: watchableSelectedCoffeeShop } = storeToRefs(mapStore)
 
 const coffeeShops = ref<any>(null)
+const isShowingLocalizationErrorAlert = ref<boolean>(false)
 
 let map: mapboxgl.Map | null = null
 
@@ -137,7 +138,7 @@ const createMap = () => {
   })
 
   map.on('click', 'unclustered-point', async (e: any) => {
-    if (!e.features) {
+    if (!e.features || geolocation.error) {
       mapStore.setSelectedCoffeeShop(null)
       return
     }
@@ -201,13 +202,16 @@ onMounted(async () => {
   const response = await mapStore.loadCoffeeShops()
   coffeeShops.value = toValue(response)[0]
   createMap()
-  if (toValue(watchableSelectedCoffeeShop)) {
+  if (toValue(watchableSelectedCoffeeShop) && geolocation.coords.value.latitude !== Infinity) {
     generateRoute({
       lngLat: {
         lng: watchableSelectedCoffeeShop.value!.geometry.coordinates[0],
         lat: watchableSelectedCoffeeShop.value!.geometry.coordinates[1]
       }
     })
+  }
+  if (geolocation.error) {
+    isShowingLocalizationErrorAlert.value = true
   }
 })
 
@@ -222,6 +226,21 @@ onBeforeUnmount(() => {
 <template>
   <v-card>
     <div id="map" class="map-container"></div>
+    <v-snackbar
+      v-model="isShowingLocalizationErrorAlert"
+      timeout="5000"
+      color="error"
+      style="z-index: 99999"
+    >
+      <span style="color: #fff"
+        >Não foi possível acessar a localização do usuário. Verifique suas configurações.</span
+      >
+      <template v-slot:actions>
+        <v-btn color="white" variant="text" @click="isShowingLocalizationErrorAlert = false">
+          Fechar
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-card>
 </template>
 
